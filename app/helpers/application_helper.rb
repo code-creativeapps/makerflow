@@ -1,6 +1,14 @@
 module ApplicationHelper
   include Pagy::Frontend
 
+  def react_component(name, props = {}, options = {}, &block)
+    html_options = options.reverse_merge(data: {
+      react_class: name,
+      react_props: (props.is_a?(String) ? props : props.to_json)
+    })
+    content_tag(:div, '', html_options, &block)
+  end
+  
   def avatar_url_for(user, opts = {})
     size = opts[:size] || 48
 
