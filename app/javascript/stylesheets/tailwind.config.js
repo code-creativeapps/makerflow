@@ -83,11 +83,15 @@ module.exports = {
         "code-400": "#fefcf9",
         "code-600": "#3c455b",
       },
+      borderWidth: {
+        '5': '5px',
+        '6': '6px'
+      }
     },
     // override the default theme using the key directly
     fontFamily: {
       sans: ['Inter', ...defaultTheme.fontFamily.sans],
-    },
+    }
   },
   variants: {
     borderWidth: ['responsive', 'last', 'hover', 'focus'],
