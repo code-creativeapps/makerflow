@@ -36,7 +36,11 @@ const Dashboard = () => {
                   {/* <div className="w-full bg-gray-500 "><div className="w-3/4 p-1 text-xs font-semibold text-center bg-yellow-400"><p className="text-white">72%</p></div></div> */}
                   {/* Tasks */}
                   {/* Task #1 */}
-                  <div className="p-2 my-2 text-sm font-semibold text-white bg-yellow-500 rounded shadow-sm">Write UX/UI Brief</div>
+                  <div className="flex justify-between p-2 my-2 text-sm font-semibold text-white bg-yellow-500 rounded shadow-sm group">Write UX/UI Brief
+                    <svg className="w-5 text-white opacity-0 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                  </div>
                   {/* Task #2 */}
                   <div className="p-2 my-2 text-sm font-semibold text-white bg-yellow-500 rounded shadow-sm">Create Job Offer</div>
                   {/* Task #3 */}
