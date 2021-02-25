@@ -3,6 +3,8 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import Sidebar from './Sidebar'
 import Planning from './Planning'
 import moment from 'moment'
+import { useSelector, useDispatch } from "react-redux"
+import { incrementAsync } from './actions/tasks'
 
 const DATA = {
   projects: [
@@ -200,6 +202,13 @@ const DATA = {
 const Dashboard = () => {
   const [projects, setProjects] = useState(DATA.projects)
   const [planning, setPlanning] = useState(DATA.planning)
+  const tasks = useSelector(state => state) 
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(incrementAsync())
+  }, [])
+
   const onDragEnd = ({ destination, source, draggableId }) => {
 
     console.log('source.droppableId', source.droppableId)
