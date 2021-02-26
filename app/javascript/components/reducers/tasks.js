@@ -17,7 +17,9 @@ import {
     FETCH_DATA_ERROR,
     SAVE_DATA_SUCCESS,
     SAVE_DATA_PENDING,
-    SAVE_DATA_ERROR
+    SAVE_DATA_ERROR,
+    OPEN_TASK,
+    CLOSE_TASK
 } from '../actions/tasks';
 
 import update from 'immutability-helper';
@@ -212,7 +214,8 @@ const initialState = {
           }
         ]
       }
-    ]
+    ],
+    openedTask: null
   }
 
 // Implement Immutability helpers
@@ -224,12 +227,35 @@ export default function tasks(state = initialState, action) {
         newTasksIds, 
         newDay, 
         dayIndex, 
-        sourceDayIndex, 
+        sourceDayIndex,
         destinationDayIndex,
         draggedTaskIndex,
-        draggedTask
+        draggedTask,
+        newTask,
+        openedTask
     } = action
     switch (type) {
+        case OPEN_TASK: 
+            return update(state, {
+                openedTask: { $set: openedTask }
+            }) 
+        case CLOSE_TASK: 
+            return update(state, {
+                openedTask: { $set: null }
+            }) 
+        case ADD_TASK: 
+            return update(state, {
+                projects: {
+                    [projectIndex]: {
+                        milestones: {
+                            [milestoneIndex]: {
+                                tasks: { $push: [newTask] },
+                                tasksIds: { $push: [newTask.id]}
+                            }
+                        }
+                    }
+                }
+            }) 
         case FROM_DAYS_TO_MILESTONES:
             return update(state, {
                   planning: {

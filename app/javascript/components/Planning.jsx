@@ -39,15 +39,15 @@ const Planning = ({planning}) => {
     return (
         <>
         {/* Planning */}
-            <div className="w-full px-4 py-2 overflow-y-scroll border border-gray-300">
+            <div className="relative w-full px-4 py-2 overflow-y-scroll border border-gray-300">
                 <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">Planning
                     <div class="flex">
-                        <div onClick={() => setLayout('column')} class="bg-gray-600 py-2 px-3 text-sm border-r-2 border-gray-200 rounded-l flex items-center">
+                        <div onClick={() => setLayout('column')} class="bg-gray-600 py-2 px-3 text-sm border-r-2 border-gray-200 rounded-l flex items-center cursor-pointer">
                             <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                             </svg> 
                         </div>
-                        <div onClick={() => setLayout('row')} class="bg-gray-600 py-2 px-3 text-sm rounded-r flex items-center">
+                        <div onClick={() => setLayout('row')} class="bg-gray-600 py-2 px-3 text-sm rounded-r flex items-center cursor-pointer">
                             <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                             </svg>
@@ -72,7 +72,7 @@ const Planning = ({planning}) => {
                                     <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef} className={
                                         layout == 'row' 
                                         ? `grid grid-cols-4 gap-2 p-5 bg-white rounded shadow`
-                                        : `bg-white flex-no-shrink w-64 mr-3 min-h-screen rounded p-3 shadow`
+                                        : `bg-white flex-no-shrink w-64 mr-3 min-h-full rounded p-3 shadow`
                                     }>
                                         { renderTasks(date) }
                                         {/* <div className="p-2 my-2 text-sm font-semibold text-white bg-pink-400 rounded shadow-sm">Write UX/UI Brief</div>
@@ -96,6 +96,7 @@ const Planning = ({planning}) => {
                     ))}
                 </div>
             </div>
+            
         </> 
     )
 }

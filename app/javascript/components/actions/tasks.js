@@ -1,5 +1,8 @@
 import moment from 'moment'
 
+export const OPEN_TASK = 'OPEN_TASK';
+export const CLOSE_TASK = 'CLOSE_TASK';
+
 export const ADD_TASK = 'ADD_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
@@ -63,6 +66,49 @@ export function fromMilestonesToMilestones(projectIndex, milestoneIndex, newTask
     milestoneIndex,
     newTasksIds
   };
+}
+export function addTask(newTask, milestoneIndex, projectIndex) {
+  return {
+    type: ADD_TASK,
+    newTask,
+    milestoneIndex,
+    projectIndex
+  };
+}
+
+export function openTask(openedTask) {
+  return {
+    type: OPEN_TASK,
+    openedTask
+  };
+}
+
+export function closeTask() {
+  return {
+    type: CLOSE_TASK
+  };
+}
+
+export function _addTask(taskName, milestone, project) {
+  return(dispatch, getState) => {
+    // call API, POST new task, get object
+    const { projects } = getState().tasks
+    const projectIndex = projects.findIndex(_project => {
+      console.log('_project', _project)
+      return _project.milestones.some(_milestone => String(_milestone.id) == milestone.id)
+    })
+    console.log('project', project)
+    const milestoneIndex = project.milestones.findIndex(_milestone => String(_milestone.id) == milestone.id)
+    const newTask = {
+      name: taskName,
+      date: null,
+      completed: false,
+      recurring: false,
+      project
+    }
+    console.log('projectIndex', projectIndex)
+    dispatch(addTask(newTask, milestoneIndex, projectIndex))
+  }
 }
 
 export function _fromDaysToMilestones(destination, source, draggableId) {

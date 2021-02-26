@@ -1,9 +1,23 @@
 import React from "react"
 import Task from './Task'
 import { Droppable } from 'react-beautiful-dnd'
+import { _addTask } from './actions/tasks'
+import { useDispatch, useSelector } from "react-redux"
 
 const Milestone = ({milestone, project}) => {
-  const tasks =  milestone.tasksIds.map((taskId, i) => milestone.tasks.find((task) => task.id == taskId))
+  const dispatch = useDispatch()
+  const projects = useSelector(state => state.tasks.projects) 
+
+  const handleKeyDown = (event) => {
+    console.log('pss')
+    if (event.key === 'Enter') {
+      dispatch(_addTask(event.target.value, milestone, project))
+      event.target.value = ''
+    }
+  }
+  const tasks = project.milestones.find(_milestone => _milestone.id == milestone.id).tasks
+
+  // const tasks =  milestone.tasksIds.map((taskId, i) => milestone.tasks.find((task) => task.id == taskId)) TODO: Add Ordering
   return (
     <Droppable droppableId={String(milestone.id)}>
       {
@@ -24,13 +38,13 @@ const Milestone = ({milestone, project}) => {
               <Task key={task.id} task={task} index={index}/>
             ))}
           { provided.placeholder }
-          <input placeholder="Add a new task in UX/UI..." className={`w-full p-2 my-2 text-sm font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>
+          <input onKeyDown={handleKeyDown} placeholder="Add a new task in UX/UI..." className={`w-full p-2 my-2 text-sm font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>
             {/* Add Milestone */}
             <h4 className="flex items-center mt-2 text-base font-normal text-gray-400">
               <div className="flex items-center justify-center w-4 h-4 mr-4 bg-gray-400 rounded-full">
                 <button className="focus:outline-none flex items-center justify-center w-4 h-4 bg-gray-400 rounded-full pb-0.5 text-white font-semibold"><p>+</p></button>
               </div>
-              <input className="placeholder-gray-400 outline-none placeholder:font-normal" placeholder="Add a Milestone"/>
+              <input className="placeholder-gray-400 capitalize outline-none placeholder:font-normal" placeholder="Add a Milestone"/>
             </h4>
           </div>
         )
