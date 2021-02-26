@@ -6,6 +6,7 @@ import Task from './Task'
 const Planning = ({planning}) => {
 
     const [dates, setDates] = useState([])
+    const [layout, setLayout] = useState('column')
 
     const getDatesBetweenDates = (startDate, endDate) => {
         let dates = []
@@ -20,11 +21,9 @@ const Planning = ({planning}) => {
       }
     
     useEffect(() => {
-        console.log(moment().endOf('week'))
         // const dates = getDatesBetweenDates(moment(), moment().add(7, 'days')) <-- Start today, Ends in 7 days
         const dates = getDatesBetweenDates(moment().startOf('week'), moment().endOf('week')) // <-- Start of the week, end of the week
         setDates(dates)
-        console.log(dates)
     }, [])
 
     const renderTasks = (date) => {
@@ -37,21 +36,44 @@ const Planning = ({planning}) => {
             return []
         }
     }
-
-    console.log('PLANNING', planning)
     return (
         <>
         {/* Planning */}
             <div className="w-full px-4 py-2 overflow-y-scroll border border-gray-300">
-                <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">Planning</h2>
+                <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">Planning
+                    <div class="flex">
+                        <div onClick={() => setLayout('column')} class="bg-gray-600 py-2 px-3 text-sm border-r-2 border-gray-200 rounded-l flex items-center">
+                            <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                            </svg> 
+                        </div>
+                        <div onClick={() => setLayout('row')} class="bg-gray-600 py-2 px-3 text-sm rounded-r flex items-center">
+                            <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </div>
+                    </div>
+                </h2>
                 {/* Days */}
-                <div className="space-y-4">
+                <div className={
+                    layout == 'row' 
+                    ? `space-y-4`
+                    : `flex px-4 pb-8 items-start overflow-x-scroll min-h-full`
+                }>
                     { dates.slice(0, 7).map((date, i) => (
                         <Droppable key={i + 4} droppableId={moment(date).format('L')}>
                             {(provided) => (
-                                <div key={i} className="space-y-2">
-                                    <h3 className="flex items-center text-lg font-medium text-gray-700">{moment(date).format('dddd')} <span className="ml-2 text-sm font-normal">{moment(date).format('LL')}</span></h3>
-                                    <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef} className="grid grid-cols-4 gap-2 p-5 bg-white rounded">
+                                <div key={i} className={
+                                    layout == 'row' 
+                                    ? `space-y-2`
+                                    : `flex flex-col `
+                                }>
+                                    <h3 className={`flex text-lg font-medium text-gray-700 ${layout == 'column' ? 'flex-col text-left': 'items-center'}`}>{moment(date).format('dddd')} <span className={`${layout == 'row' ? 'ml-2' : 'mb-3'} text-sm font-normal`}>{moment(date).format('LL')}</span></h3>
+                                    <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef} className={
+                                        layout == 'row' 
+                                        ? `grid grid-cols-4 gap-2 p-5 bg-white rounded shadow`
+                                        : `bg-white flex-no-shrink w-64 mr-3 min-h-screen rounded p-3 shadow`
+                                    }>
                                         { renderTasks(date) }
                                         {/* <div className="p-2 my-2 text-sm font-semibold text-white bg-pink-400 rounded shadow-sm">Write UX/UI Brief</div>
                                         <div className="p-2 my-2 text-sm font-semibold text-white bg-purple-400 rounded shadow-sm">Write UX/UI Brief</div>
