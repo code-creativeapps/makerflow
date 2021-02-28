@@ -84,7 +84,7 @@ const Milestone = ({milestone, project}) => {
             </div>
             
             {isOpen && tasks.map((task, index) => (
-              <Task key={task.id} task={task} index={index}/>
+              <Task key={task.id} task={task} index={index} project={project}/>
             ))}
           { provided.placeholder }
           { isOpen && <input onKeyDown={handleKeyDown} placeholder="Add a new task in UX/UI..." className={`w-full p-2 my-2 text-sm font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>}

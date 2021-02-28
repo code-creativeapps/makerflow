@@ -13,9 +13,6 @@ const Dashboard = () => {
   const planning = useSelector(state => state.tasks.planning)
   const openedTask = useSelector(state => state.tasks.openedTask)
   const dispatch = useDispatch()
-
-  console.log('projects', projects)
-  console.log('planning', planning)
   
   useEffect(() => {
     dispatch(loadData())

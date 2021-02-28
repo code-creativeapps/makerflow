@@ -19,7 +19,8 @@ import {
     SAVE_DATA_PENDING,
     SAVE_DATA_ERROR,
     OPEN_TASK,
-    CLOSE_TASK
+    CLOSE_TASK,
+    SET_PROJECT_COLOR
 } from '../actions/tasks';
 
 import update from 'immutability-helper';
@@ -234,9 +235,22 @@ export default function tasks(state = initialState, action) {
         newTask,
         openedTask,
         newMilestone,
-        newProject
+        newProject,
+        color,
+        colorBase,
+        colorShade
     } = action
     switch (type) {
+        case SET_PROJECT_COLOR: 
+          return update(state, {
+            projects: {
+                [projectIndex]: {
+                  color: { $set: color },
+                  colorBase: { $set: colorBase },
+                  colorShade: { $set: colorShade },
+                }
+              }
+            })
         case ADD_PROJECT: 
           return update(state, { projects: { $unshift: [newProject] } })
         case DELETE_PROJECT: 

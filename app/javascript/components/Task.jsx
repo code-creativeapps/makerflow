@@ -3,9 +3,10 @@ import { Draggable } from 'react-beautiful-dnd'
 import { useDispatch } from 'react-redux'
 import { openTask } from './actions/tasks'
 
-const Task = ({task, index}) => {
+const Task = ({ task, project, index }) => {
     const dispatch = useDispatch()
     const [checked, check] = useState(false)
+    const _project = project || task.project
 
     return (
         <Draggable draggableId={String(task.id)} index={index}>
@@ -19,8 +20,8 @@ const Task = ({task, index}) => {
                             flex max-h-20 items-center text-center justify-between p-2 my-2 text-sm font-semibold
                             text-white  
                             rounded shadow-sm group ${snapshot.isDragging && 'opacity-50'} 
-                            ${(checked && task.date != null) ? `bg-${task.project.colorBase}-${task.project.colorShade - 100} line-through hover:bg-${task.project.colorBase}-${task.project.colorShade - 100}`
-                            : `bg-${task.project.color} hover:bg-${task.project.colorBase}-${task.project.colorShade + 100}`}`
+                            ${(checked && task.date != null) ? `bg-${_project.colorBase}-${_project.colorShade - 100} line-through hover:bg-${_project.colorBase}-${_project.colorShade - 100}`
+                            : `bg-${_project.color} hover:bg-${_project.colorBase}-${_project.colorShade + 100}`}`
                         }
                         >
                             {task.name}

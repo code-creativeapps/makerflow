@@ -15,6 +15,8 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 
+export const SET_PROJECT_COLOR = 'SET_PROJECT_COLOR';
+
 export const FROM_MILESTONES_TO_DAYS = 'FROM_MILESTONES_TO_DAYS';
 export const FROM_DAYS_TO_MILESTONES = 'FROM_DAYS_TO_MILESTONES';
 export const FROM_DAYS_TO_DAYS = 'FROM_DAYS_TO_DAYS';
@@ -103,6 +105,16 @@ export function addProject(newProject) {
     newProject
   };
 }
+export function setProjectColor(color, projectIndex) {
+  const [colorBase, colorShade] = color.split('-') 
+  return {
+    type: SET_PROJECT_COLOR,
+    color,
+    colorBase,
+    colorShade,
+    projectIndex
+  };
+}
 
 export function deleteMilestone(milestoneIndex, projectIndex) {
   return {
@@ -118,6 +130,13 @@ export function addMilestone(newMilestone, projectIndex) {
     newMilestone,
     projectIndex
   };
+}
+
+export function _setProjectColor(color, projectIndex) {
+  return(dispatch) => {
+    // call API, POST new task, get object
+    dispatch(setProjectColor(color, projectIndex))
+  }
 }
 
 export function _addProject(projectName) {

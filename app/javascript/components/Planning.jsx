@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { Droppable } from 'react-beautiful-dnd'
 import Task from './Task'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
-const Planning = ({planning}) => {
+const Planning = ({ planning, isDragging }) => {
 
     const [dates, setDates] = useState([])
     const [layout, setLayout] = useState('column')
+    const [weekDirection, changeWeekView] = useState('')
+    const [weekCount, setWeekCount] = useState(0)
 
     const getDatesBetweenDates = (startDate, endDate) => {
         let dates = []
@@ -25,7 +28,26 @@ const Planning = ({planning}) => {
         const dates = getDatesBetweenDates(moment().startOf('week'), moment().endOf('week')) // <-- Start of the week, end of the week
         setDates(dates)
     }, [])
+    
+    useEffect(() => {
+        if (weekDirection == 'forward') {
+            setWeekCount(weekCount => weekCount + 1)
+        } else if (weekDirection == 'backward') {
+            setWeekCount(weekCount => weekCount - 1)
+        }
+    }, [weekDirection])
 
+    useEffect(() => {
+        if (weekDirection == 'forward') {
+            const dates = getDatesBetweenDates(moment().add(weekCount, 'weeks').startOf('week'), moment().add(weekCount, 'weeks').endOf('week'))
+            setDates(dates)
+        } else if (weekDirection == 'backward') {
+            const dates = getDatesBetweenDates(moment().subtract(Math.abs(weekCount), 'weeks').startOf('week'), moment().subtract(Math.abs(weekCount), 'weeks').subtract(weekCount, 'weeks').endOf('week'))
+            setDates(dates)
+        }
+        changeWeekView('')
+    }, [weekCount])
+    
     const renderTasks = (date) => {
         const dayFound = planning.find((day => day.date == moment(date).format('L')))
         
@@ -38,30 +60,46 @@ const Planning = ({planning}) => {
     return (
         <>
         {/* Planning */}
+        
             <div className="relative w-full px-4 py-2 overflow-y-scroll border border-gray-300">
-                <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">Planning
-                    <div class="flex">
-                        <div onClick={() => setLayout('column')} class="bg-gray-600 py-2 px-3 text-sm border-r-2 border-gray-200 rounded-l flex items-center cursor-pointer">
-                            <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">
+                <div class="flex">
+                        <div onClick={() => setLayout('column')} class={`${layout == 'column' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-sm rounded-l flex items-center cursor-pointer`}>
+                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </div>
+                        <div onClick={() => setLayout('row')} class={`${layout == 'row' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-sm border-gray-200 rounded-r flex items-center cursor-pointer`}>
+                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                             </svg> 
                         </div>
-                        <div onClick={() => setLayout('row')} class="bg-gray-600 py-2 px-3 text-sm rounded-r flex items-center cursor-pointer">
-                            <svg class="w-4 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                    </div>
+                    Planning
+
+                    <div class="flex">
+                        <div onClick={() => changeWeekView('backward')} class={`hover:bg-gray-600 hover:text-white bg-white text-gray-600 py-2 px-3 text-sm rounded-l flex items-center cursor-pointer`}>
+                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                        </div>
+                        <div onClick={() => changeWeekView('forward')} class={`hover:bg-gray-600 hover:text-white bg-white text-gray-600 py-2 px-3 text-sm border-gray-200 rounded-r flex items-center cursor-pointer`}>
+                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </div>
                     </div>
                 </h2>
                 {/* Days */}
-                <div className={
+                <ScrollContainer hideScrollbars={false} className={
                     layout == 'row' 
                     ? `space-y-4`
-                    : `flex px-4 pb-8 items-start overflow-x-scroll min-h-full`
+                    : `flex px-0 pb-8 items-start overflow-x-scroll min-h-full overscroll-contain`
                 }>
                     { dates.slice(0, 7).map((date, i) => (
                         <Droppable key={i + 4} droppableId={moment(date).format('L')}>
-                            {(provided) => (
+                            {(provided, snapshot) => {
+                                return (
                                 <div key={i} className={
                                     layout == 'row' 
                                     ? `space-y-2`
@@ -90,10 +128,10 @@ const Planning = ({planning}) => {
                                         { provided.placeholder }
                                     </div>
                                 </div>
-                            )}
+                            )}}
                         </Droppable>
                     ))}
-                </div>
+                </ScrollContainer>
             </div>
             
         </> 

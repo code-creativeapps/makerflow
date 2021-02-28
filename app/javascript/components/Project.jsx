@@ -1,11 +1,13 @@
 import React, { useState } from "react"
 import Milestone from './Milestone'
-import { deleteProject, _addMilestone } from './actions/tasks'
+import ColorPicker from './ColorPicker'
+import { deleteProject, _addMilestone, _setProjectColor } from './actions/tasks'
 import { useDispatch, useSelector } from "react-redux"
 
 const Project = ({project}) => {
 	const dispatch = useDispatch() 
 	const [projectName, setProjectName] = useState(project.name)
+	const [currentProjectId, setCurrentProjectId] = useState()
 	const [edit, toggleEdition] = useState(false)
 	const projects = useSelector(state => state.tasks.projects)
 	const projectIndex = projects.findIndex(_project => _project.id == project.id)
@@ -32,9 +34,15 @@ const Project = ({project}) => {
 		}
 	  }
 
-	  const _deleteProject = () => {
+	const _deleteProject = () => {
 		dispatch(deleteProject(projectIndex))
-	  }
+	}
+
+	const changeColor = (color) => {
+		dispatch(_setProjectColor(color, projectIndex))
+		setCurrentProjectId(null)
+	}
+
  	return (
 		<div>
 			{/* Color select + Name + Update icon */}
@@ -56,7 +64,7 @@ const Project = ({project}) => {
 						onBlur={() => toggleEdition(false)}
 					/>
 				) : (
-					<h3 className="flex items-center text-lg font-medium text-gray-700"><div className={`w-4 h-4 mr-4 bg-${project.color} rounded-full`}></div>{project.name}</h3>
+					<h3 className="flex items-center text-lg font-medium text-gray-700"><div onClick={() => setCurrentProjectId(project.id)} className={`w-4 h-4 mr-4 bg-${project.color} rounded-full cursor-pointer`}></div>{project.name}</h3>
 				)}
 				
 				{ !edit && (
@@ -69,8 +77,8 @@ const Project = ({project}) => {
 						</svg>
 					</div>
 				)}
-				
 			</div>
+			<ColorPicker currentProjectId={currentProjectId} changeColor={changeColor} project={project}/>
 			{/* Milestones */}
 			<div>
 				{ project.milestones.map((milestone) => (
