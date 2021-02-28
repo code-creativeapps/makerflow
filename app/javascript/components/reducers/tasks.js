@@ -221,20 +221,42 @@ const initialState = {
 // Implement Immutability helpers
 export default function tasks(state = initialState, action) {
     const {
-        type, 
-        projectIndex, 
+        type,
+        projectIndex,
         milestoneIndex, 
-        newTasksIds, 
-        newDay, 
+        newTasksIds,
+        newDay,
         dayIndex, 
         sourceDayIndex,
         destinationDayIndex,
         draggedTaskIndex,
         draggedTask,
         newTask,
-        openedTask
+        openedTask,
+        newMilestone,
+        newProject
     } = action
     switch (type) {
+        case ADD_PROJECT: 
+          return update(state, { projects: { $unshift: [newProject] } })
+        case DELETE_PROJECT: 
+          return update(state, { projects: { $splice: [[projectIndex, 1]] }})
+        case ADD_MILESTONE: 
+          return update(state, {
+            projects: {
+                [projectIndex]: {
+                  milestones: { $push: [newMilestone] }
+                }
+              }
+            })
+        case DELETE_MILESTONE: 
+          return update(state, {
+              projects: {
+                  [projectIndex]: {
+                    milestones: { $splice: [[milestoneIndex, 1]] }
+                  }
+                }
+              })
         case OPEN_TASK: 
             return update(state, {
                 openedTask: { $set: openedTask }
@@ -316,9 +338,10 @@ export default function tasks(state = initialState, action) {
                 projects: {
                     [projectIndex]: {
                         milestones: {
-                            [milestoneIndex]: { $merge: {
-                                tasksIds: newTasksIds
-                            }}
+                            [milestoneIndex]: {
+                              tasksIds: { $merge: newTasksIds }, 
+                              tasks: { $splice: [[draggedTaskIndex, 1]] }
+                            }
                         }
                     }
                 },
@@ -335,9 +358,10 @@ export default function tasks(state = initialState, action) {
                     projects: {
                         [projectIndex]: {
                             milestones: {
-                                [milestoneIndex]: { $merge: {
-                                    tasksIds: newTasksIds
-                                }}
+                              [milestoneIndex]: {
+                                tasksIds: { $merge: newTasksIds }, 
+                                tasks: { $splice: [[draggedTaskIndex, 1]] }
+                              }
                             }
                         }
                     },

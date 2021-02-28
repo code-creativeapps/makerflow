@@ -30,10 +30,9 @@ const Planning = ({planning}) => {
         const dayFound = planning.find((day => day.date == moment(date).format('L')))
         
         if (dayFound) {
-            const tasks = dayFound.tasks?.map((task, i) => <Task key={task.id} task={task} index={i}/>)
-            return tasks
+            return dayFound.tasks.length > 0 ? dayFound.tasks?.map((task, i) => <Task key={task.id} task={task} index={i}/>) : <p className="text-sm text-gray-300 cursor-default">Drop some tasks here...</p>
         } else {
-            return []
+            return <p className="text-sm text-gray-300 cursor-default">Drop some tasks here...</p>
         }
     }
     return (
@@ -66,7 +65,7 @@ const Planning = ({planning}) => {
                                 <div key={i} className={
                                     layout == 'row' 
                                     ? `space-y-2`
-                                    : `flex flex-col `
+                                    : `flex flex-col`
                                 }>
                                     <h3 className={`flex text-lg font-medium text-gray-700 ${layout == 'column' ? 'flex-col text-left': 'items-center'}`}>{moment(date).format('dddd')} <span className={`${layout == 'row' ? 'ml-2' : 'mb-3'} text-sm font-normal`}>{moment(date).format('LL')}</span></h3>
                                     <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef} className={

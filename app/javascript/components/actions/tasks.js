@@ -28,14 +28,15 @@ export const SAVE_DATA_SUCCESS = 'SAVE_DATA_SUCCESS';
 export const SAVE_DATA_PENDING = 'SAVE_DATA_PENDING';
 export const SAVE_DATA_ERROR = 'SAVE_DATA_ERROR';
 
-export function fromMilestonesToDays(projectIndex, milestoneIndex, newTasksIds, newDay, dayIndex) {
+export function fromMilestonesToDays(projectIndex, milestoneIndex, newTasksIds, newDay, dayIndex, draggedTaskIndex) {
   return {
     type: FROM_MILESTONES_TO_DAYS,
     projectIndex,
     milestoneIndex,
     newTasksIds,
     newDay,
-    dayIndex
+    dayIndex,
+    draggedTaskIndex
   };
 }
 
@@ -87,6 +88,65 @@ export function closeTask() {
   return {
     type: CLOSE_TASK
   };
+}
+
+export function deleteProject(projectIndex) {
+  return {
+    type: DELETE_PROJECT,
+    projectIndex
+  };
+}
+
+export function addProject(newProject) {
+  return {
+    type: ADD_PROJECT,
+    newProject
+  };
+}
+
+export function deleteMilestone(milestoneIndex, projectIndex) {
+  return {
+    type: DELETE_MILESTONE,
+    milestoneIndex,
+    projectIndex
+  };
+}
+
+export function addMilestone(newMilestone, projectIndex) {
+  return {
+    type: ADD_MILESTONE,
+    newMilestone,
+    projectIndex
+  };
+}
+
+export function _addProject(projectName) {
+  return(dispatch, getState) => {
+    // TODO: POST api call
+    const newProject = {
+      id: 5, // ID from POST api call
+      name: projectName,
+      color: 'yellow-500',
+      colorBase: 'yellow',
+      colorShade: 500,
+      milestones: []
+    }
+    dispatch(addProject(newProject))
+  }
+}
+
+export function _addMilestone(milestoneName, projectIndex) {
+  return(dispatch, getState) => {
+    // TODO: POST api call
+    const newMilestone = {
+      id: 4, // ID from POST api call
+      name: milestoneName,
+      expanded: true,
+      tasksIds: [],
+      tasks: []
+    }
+    dispatch(addMilestone(newMilestone, projectIndex))
+  }
 }
 
 export function _addTask(taskName, milestone, project) {
@@ -170,6 +230,9 @@ export function _fromMilestonesToDays(destination, source, draggableId) {
     const draggedTask = selectedProject.milestones.find(milestone => String(milestone.id) == [source.droppableId]).tasks
     .find(task => task.id == draggableId)
 
+    const draggedTaskIndex = selectedProject.milestones.find(milestone => String(milestone.id) == [source.droppableId]).tasks
+    .findIndex(task => task.id == draggableId)
+
     const dayIndex = planning.findIndex(day => day.date == destination.droppableId)
     console.log('DAY INDEX', dayIndex)
     if (dayIndex == -1) {
@@ -186,7 +249,7 @@ export function _fromMilestonesToDays(destination, source, draggableId) {
         ...taskDay,
         tasks: newTasks
       }
-      dispatch(fromMilestonesToDays(selectedProjectIndex, milestoneIndex, newTasksIds, newDay, dayIndex))
+      dispatch(fromMilestonesToDays(selectedProjectIndex, milestoneIndex, newTasksIds, newDay, dayIndex, draggedTaskIndex))
     }
   }
 }
