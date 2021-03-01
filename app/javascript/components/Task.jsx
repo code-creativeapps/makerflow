@@ -14,10 +14,10 @@ const Task = ({ task, project, index }) => {
                 (provided, snapshot) => (
                     <div 
                         {...task.date != null && {onClick: () => dispatch(openTask(task))}} 
-                        {...provided.draggableProps} {...provided.dragHandleProps} 
-                        innerRef={provided.innerRef} ref={provided.innerRef} 
+                        {...provided.draggableProps} {...provided.dragHandleProps}
+                        innerRef={provided.innerRef} ref={provided.innerRef}
                         className={`
-                            flex max-h-20 items-center text-center justify-between p-2 my-2 text-sm font-semibold
+                            flex max-h-20 items-center text-center justify-between p-2 my-2 text-xs font-semibold
                             text-white  
                             rounded shadow-sm group ${snapshot.isDragging && 'opacity-50'} 
                             ${(checked && task.date != null) ? `bg-${_project.colorBase}-${_project.colorShade - 100} line-through hover:bg-${_project.colorBase}-${_project.colorShade - 100}`

@@ -38,6 +38,9 @@ Rails.application.routes.draw do
       resource :me, controller: :me
       resources :accounts
       resources :users
+      resources :tasks
+      resources :milestones
+      resources :projects
     end
   end
 

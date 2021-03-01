@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_15_211740) do
+ActiveRecord::Schema.define(version: 2021_03_01_070842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,14 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
+  create_table "milestones", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "name"
+    t.boolean "expanded", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "recipient_type", null: false
@@ -180,6 +188,24 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "trial_period_days", default: 0
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer "milestone_id"
+    t.string "name"
+    t.date "date"
+    t.boolean "completed", default: false
+    t.boolean "recurring", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_connected_accounts", force: :cascade do |t|
