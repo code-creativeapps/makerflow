@@ -61,18 +61,18 @@ const Planning = ({ planning, isDragging }) => {
         <>
         {/* Planning */}
         
-            <div className="relative w-full px-4 py-2 overflow-y-scroll border border-gray-300">
+            <div className={`relative w-full px-4 pt-4 pb-10 ${layout == 'column' ? 'overflow-hidden' : 'overflow-y-scroll'} border border-gray-300`}>
                 <h2 className="flex items-center justify-between mb-8 text-xl font-semibold text-gray-600">
                 <div class="flex">
-                        <div onClick={() => setLayout('column')} class={`${layout == 'column' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-xs rounded-l flex items-center cursor-pointer`}>
-                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                            </svg>
-                        </div>
-                        <div onClick={() => setLayout('row')} class={`${layout == 'row' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-xs border-gray-200 rounded-r flex items-center cursor-pointer`}>
+                        <div onClick={() => setLayout('column')} class={`${layout == 'column' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-xs border-gray-200 rounded-l flex items-center cursor-pointer`}>
                             <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                             </svg> 
+                        </div>
+                        <div onClick={() => setLayout('row')} class={`${layout == 'row' ? 'bg-gray-600 text-white' : 'bg-white text-gray-600'} py-2 px-3 text-xs rounded-r flex items-center cursor-pointer`}>
+                            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
                         </div>
                     </div>
                     Planning
