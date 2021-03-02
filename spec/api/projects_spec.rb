@@ -7,22 +7,29 @@ describe "Projects related API calls", :type => :request do
         let!(:project_y) {create(:project, name: 'Project Y', user: user)}
         let!(:milestones_x) {create_list(:milestone, 3, project: project_x)}
         let!(:milestones_y) {create_list(:milestone, 3, project: project_y)}
-        let!(:tasks_x_1) {create_list(:task, 3, milestone: milestones_x.first)}
+        let!(:tasks_x_1) {create_list(:task, 3, milestone: milestones_x.first, date: '05/03/2021')}
 		
         before {
             get '/api/v1/projects', headers: headers
         }
 
         it 'returns all projects and calculates color values' do
-			expect(json_response.size).to eq(2)
-			expect(json_response.first['color']).to eq('green-400')
-			expect(json_response.first['colorBase']).to eq('green')
-			expect(json_response.first['colorShade']).to eq('400')
+			expect(json_response['projects'].size).to eq(2)
+			expect(json_response['projects'].first['color']).to eq('green-400')
+			expect(json_response['projects'].first['colorBase']).to eq('green')
+			expect(json_response['projects'].first['colorShade']).to eq('400')
         end
 
         it 'returns milestones and tasks' do
-            expect(json_response.first['milestones'][0]['tasks'].first).to be_present
-            expect(json_response.first['milestones'][0]['tasks'].length).to eq(3)
+            expect(json_response['projects'].first['milestones'][0]['tasks'].first).to be_present
+            expect(json_response['projects'].first['milestones'][0]['tasks'].length).to eq(3)
+        end
+
+		it 'returns the planning' do
+            expect(json_response['planning']).to be_present
+            expect(json_response['planning'].length).to eq(7)
+			date = json_response['planning'].find{|x| x['date'] == '03/05/21'}
+            expect(date['tasks'].length).to eq(3)
         end
 
         it 'returns status code 200' do

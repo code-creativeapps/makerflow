@@ -4,6 +4,8 @@ class Api::V1::ProjectsController < Api::BaseController
   # GET /projects
   def index
     @projects = current_user.projects
+    # @tasks = current_user.tasks.where(date: date).joins(:project)
+    @planning = (Date.today.beginning_of_week..Date.today.end_of_week)
     render "projects/index"
   end
 

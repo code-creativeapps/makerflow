@@ -8,9 +8,9 @@ import rootReducer from "./reducers"
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-const App = () => (
+const App = ({userToken}) => (
     <Provider store={store}>
-        <Dashboard />
+        <Dashboard userToken={userToken}/>
     </Provider>
 )
 

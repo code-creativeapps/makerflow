@@ -1,5 +1,5 @@
 import moment from 'moment'
-
+import * as axios from 'axios'
 export const OPEN_TASK = 'OPEN_TASK';
 export const CLOSE_TASK = 'CLOSE_TASK';
 
@@ -130,6 +130,40 @@ export function addMilestone(newMilestone, projectIndex) {
     newMilestone,
     projectIndex
   };
+}
+
+export function fetchDataPending() {
+  return {
+    type: FETCH_DATA_PENDING
+  };
+}
+export function fetchDataSuccess({projects, planning}) {
+  return {
+    type: FETCH_DATA_SUCCESS,
+    projects, 
+    planning
+  };
+}
+export function fetchDataError(error) {
+  return {
+    type: FETCH_DATA_ERROR,
+    error
+  };
+}
+
+export function fetchData(userToken) {
+  return(dispatch) => {
+    // call API, POST new task, get object
+    dispatch(fetchDataPending())
+    axios.get('/api/v1/projects')
+    .then((response) => {
+      dispatch(fetchDataSuccess(response.data))
+    })
+    .catch(function (error) {
+      console.log(error);
+      dispatch(fetchDataError(error))
+    })
+  }
 }
 
 export function _setProjectColor(color, projectIndex) {

@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import * as axios from 'axios'
 import { DragDropContext } from 'react-beautiful-dnd'
 import Sidebar from './Sidebar'
 import Planning from './Planning'
 import Details from './Details'
 import { useSelector, useDispatch } from "react-redux"
-import { _setWorkspaceState, loadData, closeTask } from './actions/tasks'
+import { _setWorkspaceState, fetchData, closeTask } from './actions/tasks'
 
-const Dashboard = () => {
+
+const Dashboard = ({userToken}) => {
+  axios.defaults.headers.common['Authorization'] = userToken;
   const projects = useSelector(state => state.tasks.projects) 
   const planning = useSelector(state => state.tasks.planning)
   const openedTask = useSelector(state => state.tasks.openedTask)
   const dispatch = useDispatch()
   
+  const [isDragging, setIsDragging] = useState(false)
+  
   useEffect(() => {
-    dispatch(loadData())
+    dispatch(fetchData(userToken))
   }, [])
 
   const onDragEnd = ({ destination, source, draggableId }) => {
@@ -21,9 +26,9 @@ const Dashboard = () => {
   }
   return (
     <div className="flex h-screen bg-gray-100">
-       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+       <DragDropContext onDragStart={() => setIsDragging(true)} onDragEnd={(result) => onDragEnd(result)}>
         <Sidebar projects={projects}/>
-        <Planning planning={planning}/>
+        <Planning isDragging={isDragging} planning={planning}/>
         <Details task={openedTask} closeTask={() => dispatch(closeTask())}/>
       </DragDropContext>
     </div>

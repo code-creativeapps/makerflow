@@ -25,7 +25,7 @@ import {
 
 import update from 'immutability-helper';
 
-const initialState = {
+const demoState = {
     projects: [
       {
         id: 1,
@@ -217,11 +217,19 @@ const initialState = {
       }
     ],
     openedTask: null
-  }
+}
+
+const initialState = {
+  projects: [],
+  planning: [],
+  openedTask: null
+}
 
 // Implement Immutability helpers
 export default function tasks(state = initialState, action) {
     const {
+        projects,
+        planning,
         type,
         projectIndex,
         milestoneIndex, 
@@ -238,9 +246,14 @@ export default function tasks(state = initialState, action) {
         newProject,
         color,
         colorBase,
-        colorShade
+        colorShade,
     } = action
     switch (type) {
+      case FETCH_DATA_SUCCESS:
+          return update(state, { 
+            projects: { $set: projects }, 
+            planning: { $set: planning }
+          })
         case SET_PROJECT_COLOR: 
           return update(state, {
             projects: {
