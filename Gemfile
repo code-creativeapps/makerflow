@@ -34,6 +34,12 @@ group :development, :test do
   gem "bundler-audit", github: "rubysec/bundler-audit"
   gem "letter_opener_web", "~> 1.3", ">= 1.3.4"
   gem "standard"
+
+  # RSPEC
+  gem 'rspec-rails', '~> 3.6'
+  gem 'faker'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -43,6 +49,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+
+  # RSPEC
+  gem 'guard-rspec', require: false
+  gem 'guard-livereload', '~> 2.5', require: false
 end
 
 group :test do

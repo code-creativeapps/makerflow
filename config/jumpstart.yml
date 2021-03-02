@@ -1,6 +1,6 @@
 --- !ruby/object:Jumpstart::Configuration
 application_name: MakerFlow
-business_name: CreativeApps SASU
+business_name: CreativeApps SAS
 domain: example.com
 support_email: hello@creativeapps.studio
 default_from_email: Jumpstart <support@example.com>

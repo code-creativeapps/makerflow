@@ -64,10 +64,18 @@ class User < ApplicationRecord
   has_many :connected_accounts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
 
+  has_many :projects
+  has_many :milestones, through: :projects
+  has_many :tasks, through: :milestones
+
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
 
   # Validations
   validates :name, presence: true
+
+  def api_token
+    self.api_tokens.find_or_create_by(name: "default").token
+  end
 end

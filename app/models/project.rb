@@ -12,4 +12,19 @@
 class Project < ApplicationRecord
     belongs_to :user
     has_many :milestones
+
+    validates :name, presence: true
+    after_initialize :init
+    
+    def init
+        self.color  ||= 'yellow-500'
+    end
+
+    def colorBase
+        self.color.split('-')[0] if self.color
+    end
+
+    def colorShade
+        self.color.split('-')[1] if self.color
+    end
 end

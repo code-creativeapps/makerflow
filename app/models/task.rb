@@ -13,4 +13,7 @@
 #
 class Task < ApplicationRecord
     belongs_to :milestone
+    has_one :project, through: :milestone
+
+    validates :name, presence: true
 end

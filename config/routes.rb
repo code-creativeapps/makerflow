@@ -38,9 +38,12 @@ Rails.application.routes.draw do
       resource :me, controller: :me
       resources :accounts
       resources :users
-      resources :tasks
-      resources :milestones
-      resources :projects
+      resources :projects do
+        resources :milestones, only: [:create, :update, :destroy] do
+          resources :tasks, only: [:create]
+        end
+      end
+      resources :tasks, only: [:update, :destroy]
     end
   end
 

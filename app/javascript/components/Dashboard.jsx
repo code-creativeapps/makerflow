@@ -6,8 +6,6 @@ import Details from './Details'
 import { useSelector, useDispatch } from "react-redux"
 import { _setWorkspaceState, loadData, closeTask } from './actions/tasks'
 
-
-
 const Dashboard = () => {
   const projects = useSelector(state => state.tasks.projects) 
   const planning = useSelector(state => state.tasks.planning)
