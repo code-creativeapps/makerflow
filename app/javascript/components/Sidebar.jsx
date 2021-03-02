@@ -23,7 +23,7 @@ const Sidebar = ({projects}) => {
         <div className="w-1/4 p-2 overflow-y-auto bg-white border border-gray-300">
             { edit ? (
                 <input 
-                    className="w-full mb-8 text-2xl font-semibold text-gray-600 border-none resize-none focus:m-0 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"
+                    className="w-full mb-8 text-xl font-semibold text-gray-600 border-none resize-none focus:m-0 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"
                     placeholder="New project..."
                     autoFocus
                     autoCorrect="false"
@@ -34,7 +34,7 @@ const Sidebar = ({projects}) => {
                     onBlur={() => toggleEdition(false)}
                 />
             ) : (
-                <h2 className="flex items-center justify-between mb-8 text-2xl font-semibold text-gray-600">Projects<button onClick={() => toggleEdition(!edit)} className="focus:outline-none flex text-base items-center justify-center w-4 h-4 bg-gray-600 rounded-full pb-0.5 text-white font-semibold"><p>+</p></button></h2>
+                <h2 className="flex items-center justify-between mb-8 text-xl font-semibold text-gray-600">Projects<button onClick={() => toggleEdition(!edit)} className="focus:outline-none flex text-base items-center justify-center w-4 h-4 bg-gray-600 rounded-full pb-0.5 text-white font-semibold"><p>+</p></button></h2>
             )}
             {/* Projects */}
             <div className="space-y-8">
