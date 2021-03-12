@@ -43,7 +43,7 @@ const Milestone = ({milestone, project}) => {
         (provided) => (
           <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef}>
             <div className="flex items-center justify-between mb-2 space-x-2 opacity-100 group group-focus:opacity-0">
-              <h4 className={`flex items-center text-sm font-semibold text-gray-400 ${!isOpen && 'italic'}`}>
+              <h4 className={`flex items-center text-base font-semibold text-gray-400 ${!isOpen && 'italic'}`}>
                 <button onClick={() => toggleIsOpen(!isOpen)} className="flex items-center justify-center w-4 h-4 mr-4 bg-gray-400 rounded-full focus:outline-none group">
                   <div style={isOpen ? {borderTop: "5px solid white"} : {borderLeft: "5px solid white"}} className={`w-0 h-0 ${isOpen ? 'border-t border-b-0 border-transparent' : 'ml-0.5 border-l border-r-0 border-transparent'} border-solid border-5`}></div>
                 </button>
@@ -83,11 +83,11 @@ const Milestone = ({milestone, project}) => {
               )}
             </div>
             
-            {isOpen && tasks.map((task, index) => (
+            {isOpen && tasks.filter(task => task.date == null).map((task, index) => (
               <Task key={task.id} task={task} index={index} project={project}/>
             ))}
           { provided.placeholder }
-          { isOpen && <input onKeyDown={handleKeyDown} placeholder="Add a new task in UX/UI..." className={`w-full p-2 my-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>}
+          { isOpen && <input onKeyDown={handleKeyDown} placeholder="Add a new task in UX/UI..." className={`w-full p-2 mb-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>}
           </div>
         )
       }

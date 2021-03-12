@@ -7,6 +7,8 @@ export const ADD_TASK = 'ADD_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 
+export const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR';
+
 export const ADD_MILESTONE = 'ADD_MILESTONE';
 export const UPDATE_MILESTONE = 'UPDATE_MILESTONE';
 export const DELETE_MILESTONE = 'DELETE_MILESTONE';
@@ -29,6 +31,7 @@ export const FETCH_DATA_ERROR = 'FETCH_DATA_ERROR';
 export const SAVE_DATA_SUCCESS = 'SAVE_DATA_SUCCESS';
 export const SAVE_DATA_PENDING = 'SAVE_DATA_PENDING';
 export const SAVE_DATA_ERROR = 'SAVE_DATA_ERROR';
+
 
 export function fromMilestonesToDays(projectIndex, milestoneIndex, newTasksIds, newDay, dayIndex, draggedTaskIndex) {
   return {
@@ -83,6 +86,21 @@ export function openTask(openedTask) {
   return {
     type: OPEN_TASK,
     openedTask
+  };
+}
+
+export function updateTask({projects, planning}) {
+  return {
+    type: UPDATE_TASK,
+    projects,
+    planning
+  };
+}
+
+export function updateTaskError(error) {
+  return {
+    type: UPDATE_TASK_ERROR,
+    error
   };
 }
 
@@ -244,12 +262,24 @@ export function _fromDaysToMilestones(destination, source, draggableId) {
     console.log('draggedTask', draggedTask)
   
     dispatch(fromDaysToMilestones(sourceDayIndex, draggedTaskIndex, draggedTask, selectedProjectIndex, destinationMilestoneIndex))
+    // call API, POST new task, get object
+    axios.put(`/api/v1/tasks/${draggableId}`, { task: { date: null } })
+    .then((response) => {
+      const { data } = response
+      dispatch(updateTask(data))
+    })
+    .catch(function (error) {
+      console.log(error);
+      dispatch(updateTaskError(error))
+      // Display error on the front-end
+      dispatch(updateTask({planning, projects}))
+    })
   }
 }
 
 export function _fromDaysToDays(destination, source, draggableId) {
   return(dispatch, getState) => {
-    const { planning } = getState().tasks
+    const { planning, projects } = getState().tasks
 
     const sourceDayIndex = planning.findIndex(day => day.date == source.droppableId)
     const draggedTask = planning[sourceDayIndex].tasks.find(task => task.id == draggableId)
@@ -257,11 +287,23 @@ export function _fromDaysToDays(destination, source, draggableId) {
     
     const destinationDayIndex = planning.findIndex(day => day.date == destination.droppableId)
     const newDay = {
-      id: moment(destination.droppableId).format('dddd'),
+      id: moment(destination.droppableId).format('DD/MM/YYYY'),
       date: destination.droppableId,
       tasks: [draggedTask]
     }
     dispatch(fromDaysToDays(newDay, sourceDayIndex, destinationDayIndex, draggedTaskIndex))
+    // call API, POST new task, get object
+    axios.put(`/api/v1/tasks/${draggableId}`, { task: { date: destination.droppableId} })
+    .then((response) => {
+      const { data } = response
+      dispatch(updateTask(data))
+    })
+    .catch(function (error) {
+      console.log(error);
+      dispatch(updateTaskError(error))
+      // Display error on the front-end
+      dispatch(updateTask({planning, projects}))
+    })
   }
 }
 
@@ -277,7 +319,7 @@ export function _fromMilestonesToDays(destination, source, draggableId) {
       return project.milestones.some(milestone => String(milestone.id) == [source.droppableId])
     })
 
-    const newTasksIds = Array.from(selectedProject.milestones.find(milestone => String(milestone.id) == [source.droppableId]).tasksIds)
+    const newTasksIds = Array.from(selectedProject.milestones.find(milestone => String(milestone.id) == [source.droppableId]).tasks.map(t => t.id))
     newTasksIds.splice(source.index, 1)
     
     const draggedTask = selectedProject.milestones.find(milestone => String(milestone.id) == [source.droppableId]).tasks
@@ -290,7 +332,7 @@ export function _fromMilestonesToDays(destination, source, draggableId) {
     console.log('DAY INDEX', dayIndex)
     if (dayIndex == -1) {
       const newDay = {
-        id: moment(destination.droppableId).format('dddd'),
+        id: moment(destination.droppableId).format('DD/MM/YYYY'),
         date: destination.droppableId,
         tasks: [draggedTask]
       }
@@ -304,6 +346,18 @@ export function _fromMilestonesToDays(destination, source, draggableId) {
       }
       dispatch(fromMilestonesToDays(selectedProjectIndex, milestoneIndex, newTasksIds, newDay, dayIndex, draggedTaskIndex))
     }
+    // call API, POST new task, get object
+    axios.put(`/api/v1/tasks/${draggableId}`, { task: { date: destination.droppableId} })
+    .then((response) => {
+      const { data } = response
+      dispatch(updateTask(data))
+    })
+    .catch(function (error) {
+      console.log(error);
+      dispatch(updateTaskError(error))
+      // Display error on the front-end
+      dispatch(updateTask({planning, projects}))
+    })
   }
 }
 
@@ -346,11 +400,11 @@ export function _setWorkspaceState(destination, source, draggableId) {
 
     const fromMilestones = ['1', '2', '3'].includes(source.droppableId)
     const toMilestones = ['1', '2', '3'].includes(destination.droppableId)
-    const isDate = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/
+    const isDate = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/
+    // const isDate = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/ <-- Old format MM/DD/YYYY
     const toDays = isDate.test(destination.droppableId)
     const fromDays = isDate.test(source.droppableId)
 
-    console.log('droppableId', source.droppableId)
     // From Milestones to days =>
     if(fromMilestones && toDays) {
       dispatch(_fromMilestonesToDays(destination, source, draggableId))
@@ -367,7 +421,6 @@ export function _setWorkspaceState(destination, source, draggableId) {
       dispatch(_fromDaysToDays(destination, source, draggableId))
       // dispatch a save to Database and dispatch redux state change on success
     } 
-
     else if(fromMilestones && toMilestones) {
       dispatch(_fromMilestonesToMilestones(destination, source, draggableId))
       // dispatch a save to Database and dispatch redux state change on success

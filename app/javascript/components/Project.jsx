@@ -49,7 +49,7 @@ const Project = ({project}) => {
 			<div className="flex items-center justify-between mb-4 group">
 				{ edit ? (
 					<input
-						className="text-base font-medium text-gray-700 border-none resize-none focus:p-0 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"
+						className="text-lg font-medium text-gray-700 border-none resize-none focus:p-0 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"
 						type="text"
 						name="task"
 						autoFocus
@@ -64,7 +64,7 @@ const Project = ({project}) => {
 						onBlur={() => toggleEdition(false)}
 					/>
 				) : (
-					<h3 className="flex items-center text-base font-medium text-gray-700"><div onClick={() => setCurrentProjectId(project.id)} className={`w-4 h-4 mr-4 bg-${project.color} rounded-full cursor-pointer`}></div>{project.name}</h3>
+					<h3 className="flex items-center text-lg font-medium text-gray-700"><div onClick={() => setCurrentProjectId(project.id)} className={`w-4 h-4 mr-4 bg-${project.color} rounded-full cursor-pointer`}></div>{project.name}</h3>
 				)}
 				
 				{ !edit && (
@@ -88,7 +88,13 @@ const Project = ({project}) => {
             
 				<h4 className="flex items-center mt-2 text-base font-normal text-gray-400">
 					<div className="flex items-center justify-center w-4 h-4 mr-4 bg-gray-400 rounded-full">
-						<button className="flex items-center justify-center w-4 h-4 font-semibold text-white bg-gray-400 rounded-full focus:outline-none"><p>+</p></button>
+						<button className="flex items-center justify-center w-4 h-4 font-semibold text-white bg-gray-400 rounded-full focus:outline-none">
+							<p>
+							<svg className="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+								<path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+							</svg>
+							</p>
+						</button>
 					</div>
 					<input onKeyDown={handleKeyDownMilestone} className="placeholder-gray-400 capitalize outline-none placeholder:font-normal" placeholder="Add a Milestone"/> 
 				</h4>

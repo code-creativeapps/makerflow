@@ -34,7 +34,13 @@ const Sidebar = ({projects}) => {
                     onBlur={() => toggleEdition(false)}
                 />
             ) : (
-                <h2 className="flex items-center justify-between mb-8 text-xl font-semibold text-gray-600">Projects<button onClick={() => toggleEdition(!edit)} className="focus:outline-none flex text-base items-center justify-center w-4 h-4 bg-gray-600 rounded-full pb-0.5 text-white font-semibold"><p>+</p></button></h2>
+                <h2 className="flex items-center justify-between mb-8 text-xl font-semibold text-gray-600">Projects<button onClick={() => toggleEdition(!edit)} className="focus:outline-none flex text-base items-center justify-center w-4 h-4 bg-gray-600 rounded-full text-white font-semibold"><p>
+                    <svg className="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                    </p>
+                    </button>
+                </h2>
             )}
             {/* Projects */}
             <div className="space-y-8">

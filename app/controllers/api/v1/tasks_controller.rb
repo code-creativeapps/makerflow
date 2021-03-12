@@ -16,7 +16,9 @@ class Api::V1::TasksController < Api::BaseController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      render partial: "tasks/task", locals: {task: @task}
+      @projects = current_user.projects
+      @planning = current_user.tasks.where.not(date: nil).map(&:date).uniq
+      render "projects/index"
     else
       render json: {errors: @task.errors}, status: :unprocessable_entity
     end

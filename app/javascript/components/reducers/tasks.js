@@ -249,6 +249,11 @@ export default function tasks(state = initialState, action) {
         colorShade,
     } = action
     switch (type) {
+      case UPDATE_TASK:
+          return update(state, { 
+            projects: { $set: projects }, 
+            planning: { $set: planning }
+          })
       case FETCH_DATA_SUCCESS:
           return update(state, { 
             projects: { $set: projects }, 
@@ -306,6 +311,7 @@ export default function tasks(state = initialState, action) {
                 }
             }) 
         case FROM_DAYS_TO_MILESTONES:
+            console.log('hey 2', draggedTask, draggedTaskIndex)
             return update(state, {
                   planning: {
                     [sourceDayIndex]: { 
@@ -317,7 +323,7 @@ export default function tasks(state = initialState, action) {
                         milestones: {
                             [milestoneIndex]: {
                                 tasks: { $push: [draggedTask]},
-                                tasksIds: { $push: [draggedTask.id]}
+                                // tasksIds: { $push: [draggedTask.id]}
                             }
                         }
                     }
@@ -352,8 +358,8 @@ export default function tasks(state = initialState, action) {
                 projects: {
                     [projectIndex]: {
                         milestones: {
-                            [milestoneIndex]: { $merge: {
-                                tasksIds: newTasksIds
+                            [milestoneIndex]: { $set: {
+                                tasksIds: [newTasksIds]
                             }}
                         }
                     }
@@ -366,7 +372,7 @@ export default function tasks(state = initialState, action) {
                     [projectIndex]: {
                         milestones: {
                             [milestoneIndex]: {
-                              tasksIds: { $merge: newTasksIds }, 
+                              tasksIds: { $set: [newTasksIds] }, 
                               tasks: { $splice: [[draggedTaskIndex, 1]] }
                             }
                         }
@@ -386,7 +392,7 @@ export default function tasks(state = initialState, action) {
                         [projectIndex]: {
                             milestones: {
                               [milestoneIndex]: {
-                                tasksIds: { $merge: newTasksIds }, 
+                                tasksIds: { $set: [newTasksIds] }, 
                                 tasks: { $splice: [[draggedTaskIndex, 1]] }
                               }
                             }

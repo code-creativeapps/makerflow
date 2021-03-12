@@ -49,8 +49,7 @@ const Planning = ({ planning, isDragging }) => {
     }, [weekCount])
     
     const renderTasks = (date) => {
-        const dayFound = planning.find((day => day.date == moment(date).format('L')))
-        
+        const dayFound = planning.find((day => day.date == moment(date).format('DD/MM/YYYY')))
         if (dayFound) {
             return dayFound.tasks.length > 0 ? dayFound.tasks?.map((task, i) => <Task key={task.id} task={task} index={i}/>) : <p className="text-xs text-gray-300 cursor-default">Drop some tasks here...</p>
         } else {
@@ -91,16 +90,16 @@ const Planning = ({ planning, isDragging }) => {
                     </div>
                 </h2>
                 {/* Days */}
-                <ScrollContainer hideScrollbars={false} className={
+                <ScrollContainer hideScrollbars={false} horizontal={!isDragging} className={
                     layout == 'row' 
                     ? `space-y-4`
                     : `flex px-0 pb-8 items-start overflow-x-scroll min-h-full overscroll-contain`
                 }>
                     { dates.slice(0, 7).map((date, i) => (
-                        <Droppable key={i + 4} droppableId={moment(date).format('L')}>
+                        <Droppable key={i} droppableId={moment(date).format('DD/MM/YYYY')}>
                             {(provided, snapshot) => {
                                 return (
-                                <div key={i} className={
+                                <div className={
                                     layout == 'row' 
                                     ? `space-y-2`
                                     : `flex flex-col`
