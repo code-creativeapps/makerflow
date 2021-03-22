@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Task from './Task'
 import { Droppable } from 'react-beautiful-dnd'
-import { _addTask, deleteMilestone } from './actions/tasks'
+import { _addTask, _deleteMilestone, _updateMilestone } from './actions'
 import { useDispatch, useSelector } from "react-redux"
 
 const Milestone = ({milestone, project}) => {
@@ -13,13 +13,14 @@ const Milestone = ({milestone, project}) => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      dispatch(_addTask(event.target.value, milestone, project))
+      dispatch(_addTask(event.target.value, milestone.id, project.id))
       event.target.value = ''
     }
   }
   const handleKeyDownMilestone = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault()
+      dispatch(_updateMilestone(event.target.value, project.id, milestone.id))
 			toggleEdition(false)
       return
     } else if (event.key === 'Escape') {
@@ -29,16 +30,11 @@ const Milestone = ({milestone, project}) => {
 		}
   }
 
-  const _deleteMilestone = () => {
-		const projectIndex = projects.findIndex(_project => _project.id == project.id)
-    const milestoneIndex = project.milestones.findIndex(_milestone => _milestone.id == milestone.id)
-		dispatch(deleteMilestone(milestoneIndex, projectIndex))
-  }
   const tasks = project.milestones.find(_milestone => _milestone.id == milestone.id).tasks
 
   // const tasks =  milestone.tasksIds.map((taskId, i) => milestone.tasks.find((task) => task.id == taskId)) TODO: Add Ordering
   return (
-    <Droppable droppableId={String(milestone.id)}>
+    <Droppable droppableId={`milestone-${milestone.id}`}>
       {
         (provided) => (
           <div {...provided.droppableProps} innerRef={provided.innerRef} ref={provided.innerRef}>
@@ -76,7 +72,7 @@ const Milestone = ({milestone, project}) => {
                   <svg onClick={() => toggleEdition(true)} className="w-5 text-gray-400 opacity-0 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
-                  <svg onClick={() => { if (window.confirm('Are you sure you want to delete this milestone?')) _deleteMilestone()}} className="w-5 text-gray-400 opacity-0 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <svg onClick={() => { if (window.confirm('Are you sure you want to delete this milestone?')) dispatch(_deleteMilestone(project.id, milestone.id))}} className="w-5 text-gray-400 opacity-0 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -87,7 +83,7 @@ const Milestone = ({milestone, project}) => {
               <Task key={task.id} task={task} index={index} project={project}/>
             ))}
           { provided.placeholder }
-          { isOpen && <input onKeyDown={handleKeyDown} placeholder="Add a new task in UX/UI..." className={`w-full p-2 mb-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 border-${project.colorBase}-${project.colorShade - 100} rounded shadow-sm outline-none focus:bg-${project.colorBase}-${project.colorShade + 100} focus:text-white focus:placeholder-white`}/>}
+          { isOpen && <input onKeyDown={handleKeyDown} placeholder={`Add a new task in ${milestone.name}...`} className={`w-full p-2 mb-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 ${project.colorBase != 'black' ? `border-${project.colorBase}-${project.colorShade - 100}` : 'border-black'}  rounded shadow-sm outline-none ${project.colorBase != 'black' ? `focus:bg-${project.colorBase}-${project.colorShade + 100}` : 'focus:bg-black'}  focus:text-white focus:placeholder-white`}/>}
           </div>
         )
       }

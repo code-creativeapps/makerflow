@@ -71,11 +71,18 @@ class User < ApplicationRecord
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
+  after_create :seed_example_data
 
   # Validations
   validates :name, presence: true
 
   def api_token
     self.api_tokens.find_or_create_by(name: "default").token
+  end
+
+  def seed_example_data
+    example_project = self.projects.create(name: 'Example Project')
+    example_milestone = example_project.milestones.create(name: 'Example Milestone')
+    example_task = example_milestone.tasks.create(name: 'Example Task')
   end
 end

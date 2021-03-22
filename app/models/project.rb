@@ -11,7 +11,8 @@
 #
 class Project < ApplicationRecord
     belongs_to :user
-    has_many :milestones
+    has_many :milestones, dependent: :destroy
+    has_many :tasks, through: :milestones, dependent: :destroy 
 
     validates :name, presence: true
     after_initialize :init
@@ -25,6 +26,6 @@ class Project < ApplicationRecord
     end
 
     def colorShade
-        self.color.split('-')[1] if self.color
+        self.color.split('-')[1].to_i if self.color
     end
 end

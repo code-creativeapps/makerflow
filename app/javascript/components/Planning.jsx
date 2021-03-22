@@ -30,6 +30,7 @@ const Planning = ({ planning, isDragging }) => {
     }, [])
     
     useEffect(() => {
+        console.log('weekDirection', weekDirection)
         if (weekDirection == 'forward') {
             setWeekCount(weekCount => weekCount + 1)
         } else if (weekDirection == 'backward') {
@@ -38,13 +39,13 @@ const Planning = ({ planning, isDragging }) => {
     }, [weekDirection])
 
     useEffect(() => {
-        if (weekDirection == 'forward') {
+        // if (weekDirection == 'forward') {
             const dates = getDatesBetweenDates(moment().add(weekCount, 'weeks').startOf('week'), moment().add(weekCount, 'weeks').endOf('week'))
             setDates(dates)
-        } else if (weekDirection == 'backward') {
-            const dates = getDatesBetweenDates(moment().subtract(Math.abs(weekCount), 'weeks').startOf('week'), moment().subtract(Math.abs(weekCount), 'weeks').subtract(weekCount, 'weeks').endOf('week'))
-            setDates(dates)
-        }
+        // } else if (weekDirection == 'backward') {
+        //     const dates = getDatesBetweenDates(moment().subtract(Math.abs(weekCount), 'weeks').startOf('week'), moment().subtract(Math.abs(weekCount), 'weeks').subtract(weekCount, 'weeks').endOf('week'))
+        //     setDates(dates)
+        // }
         changeWeekView('')
     }, [weekCount])
     

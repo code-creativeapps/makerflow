@@ -3,13 +3,7 @@ class Api::V1::ProjectsController < Api::BaseController
 
   # GET /projects
   def index
-    @projects = current_user.projects
-    # @tasks = current_user.tasks.where(date: date).joins(:project)
-    # @planning = (Date.today.beginning_of_week..Date.today.end_of_week)
-    # @planning = current_user.tasks.where.not(date: nil).joins(:project)
-    # TODO: CLEAN COMMENTS & OPTIMIZE QUERY
-    @planning = current_user.tasks.where.not(date: nil).map(&:date).uniq
-    render "projects/index"
+    return_current_state
   end
 
 
@@ -18,7 +12,7 @@ class Api::V1::ProjectsController < Api::BaseController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      render partial: "projects/project", locals: {project: @project}
+      return_current_state
     else
       render json: {errors: @project.errors}, status: :unprocessable_entity
     end
@@ -27,7 +21,7 @@ class Api::V1::ProjectsController < Api::BaseController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      render partial: "projects/project", locals: {project: @project}
+      return_current_state
     else
       render json: {errors: @project.errors}, status: :unprocessable_entity
     end
@@ -36,7 +30,7 @@ class Api::V1::ProjectsController < Api::BaseController
   # DELETE /projects/1
   def destroy
     if @project.destroy
-      render json: {}, status: :ok
+      return_current_state
     else
       render json: {errors: @project.errors}, status: :unprocessable_entity
     end
@@ -45,6 +39,7 @@ class Api::V1::ProjectsController < Api::BaseController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+
   def set_project
     @project = current_user.projects.find(params[:id])
   end

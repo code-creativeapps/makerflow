@@ -1,13 +1,8 @@
 import { 
+    UPDATE_STATE,
     ADD_TASK,
-    UPDATE_TASK,
-    DELETE_TASK,
     ADD_MILESTONE,
-    UPDATE_MILESTONE,
     DELETE_MILESTONE,
-    ADD_PROJECT,
-    UPDATE_PROJECT,
-    DELETE_PROJECT,
     FROM_MILESTONES_TO_DAYS,
     FROM_DAYS_TO_MILESTONES,
     FROM_DAYS_TO_DAYS,
@@ -15,13 +10,9 @@ import {
     FETCH_DATA_SUCCESS,
     FETCH_DATA_PENDING,
     FETCH_DATA_ERROR,
-    SAVE_DATA_SUCCESS,
-    SAVE_DATA_PENDING,
-    SAVE_DATA_ERROR,
     OPEN_TASK,
     CLOSE_TASK,
-    SET_PROJECT_COLOR
-} from '../actions/tasks';
+} from '../actions';
 
 import update from 'immutability-helper';
 
@@ -222,7 +213,8 @@ const demoState = {
 const initialState = {
   projects: [],
   planning: [],
-  openedTask: null
+  openedTask: null,
+  showPanel: false
 }
 
 // Implement Immutability helpers
@@ -242,6 +234,7 @@ export default function tasks(state = initialState, action) {
         draggedTask,
         newTask,
         openedTask,
+        showPanel,
         newMilestone,
         newProject,
         color,
@@ -249,7 +242,7 @@ export default function tasks(state = initialState, action) {
         colorShade,
     } = action
     switch (type) {
-      case UPDATE_TASK:
+      case UPDATE_STATE:
           return update(state, { 
             projects: { $set: projects }, 
             planning: { $set: planning }
@@ -259,20 +252,20 @@ export default function tasks(state = initialState, action) {
             projects: { $set: projects }, 
             planning: { $set: planning }
           })
-        case SET_PROJECT_COLOR: 
-          return update(state, {
-            projects: {
-                [projectIndex]: {
-                  color: { $set: color },
-                  colorBase: { $set: colorBase },
-                  colorShade: { $set: colorShade },
-                }
-              }
-            })
-        case ADD_PROJECT: 
-          return update(state, { projects: { $unshift: [newProject] } })
-        case DELETE_PROJECT: 
-          return update(state, { projects: { $splice: [[projectIndex, 1]] }})
+        // case SET_PROJECT_COLOR: 
+        //   return update(state, {
+        //     projects: {
+        //         [projectIndex]: {
+        //           color: { $set: color },
+        //           colorBase: { $set: colorBase },
+        //           colorShade: { $set: colorShade },
+        //         }
+        //       }
+        //     })
+        // case ADD_PROJECT: 
+        //   return update(state, { projects: { $unshift: [newProject] } })
+        // case DELETE_PROJECT: 
+        //   return update(state, { projects: { $splice: [[projectIndex, 1]] }})
         case ADD_MILESTONE: 
           return update(state, {
             projects: {
@@ -291,7 +284,8 @@ export default function tasks(state = initialState, action) {
               })
         case OPEN_TASK: 
             return update(state, {
-                openedTask: { $set: openedTask }
+                openedTask: { $set: openedTask },
+                showPanel: { $set: showPanel },
             }) 
         case CLOSE_TASK: 
             return update(state, {
@@ -359,7 +353,8 @@ export default function tasks(state = initialState, action) {
                     [projectIndex]: {
                         milestones: {
                             [milestoneIndex]: { $set: {
-                                tasksIds: [newTasksIds]
+                                // tasksIds: [newTasksIds]
+                                tasks: {$push: [draggedTask]}
                             }}
                         }
                     }

@@ -7,7 +7,7 @@ class Api::V1::TasksController < Api::BaseController
     @task = @milestone.tasks.build(task_params)
 
     if @task.save
-      render partial: "tasks/task", locals: {task: @task}
+      return_current_state
     else
       render json: {errors: @task.errors}, status: :unprocessable_entity
     end
@@ -16,9 +16,7 @@ class Api::V1::TasksController < Api::BaseController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      @projects = current_user.projects
-      @planning = current_user.tasks.where.not(date: nil).map(&:date).uniq
-      render "projects/index"
+      return_current_state @task
     else
       render json: {errors: @task.errors}, status: :unprocessable_entity
     end
@@ -27,7 +25,7 @@ class Api::V1::TasksController < Api::BaseController
   # DELETE /tasks/1
   def destroy
     if @task.destroy
-      render json: {}, status: :ok
+      return_current_state
     else
       render json: {errors: @task.errors}, status: :unprocessable_entity
     end
@@ -45,6 +43,6 @@ class Api::V1::TasksController < Api::BaseController
 
   # Only allow a trusted parameter "white list" through.
   def task_params
-    params.require(:task).permit(:name, :date, :completed, :recurring)
+    params.require(:task).permit(:name, :notes, :date, :completed, :recurring, :milestone_id)
   end
 end

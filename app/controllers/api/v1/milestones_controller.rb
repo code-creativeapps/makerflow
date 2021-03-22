@@ -6,7 +6,7 @@ class Api::V1::MilestonesController < Api::BaseController
     @milestone = @project.milestones.build(milestone_params)
 
     if @milestone.save
-      render partial: "milestones/milestone", locals: {milestone: @milestone}
+      return_current_state
     else
       render json: {errors: @milestone.errors}, status: :unprocessable_entity
     end
@@ -15,7 +15,7 @@ class Api::V1::MilestonesController < Api::BaseController
   # PATCH/PUT /milestones/1
   def update
     if @milestone.update(milestone_params)
-      render partial: "milestones/milestone", locals: {milestone: @milestone}
+      return_current_state
     else
       render json: {errors: @milestone.errors}, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class Api::V1::MilestonesController < Api::BaseController
   # DELETE /milestones/1
   def destroy
     if @milestone.destroy
-      render json: {}, status: :ok
+      return_current_state
     else
       render json: {errors: @milestone.errors}, status: :unprocessable_entity
     end

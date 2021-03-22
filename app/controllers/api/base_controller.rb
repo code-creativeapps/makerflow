@@ -26,4 +26,11 @@ class Api::BaseController < ApplicationController
       api_token.user
     end
   end
+
+  def return_current_state task=nil
+    @projects = current_user.projects.order(created_at: :asc)
+    @planning = current_user.tasks.where.not(date: nil).map(&:date).uniq
+    @task = task
+    render "projects/index"
+  end
 end
