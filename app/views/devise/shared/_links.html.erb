@@ -12,6 +12,16 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to t(".sign_in_with_provider", provider: OmniAuth::Utils.camelize(provider)), omniauth_authorize_path(resource_name, provider), class: "btn-link" %><br />
+    <% if provider == :google_oauth2 %>
+      <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn-link bg-white p-2 text-center btn-expanded border border-purple-500 rounded-md mt-5" do %>
+        <div class="flex justify-center gap-x-2">
+          <%= image_tag 'g-logo', size: '24x24' %>
+          <%= t(".sign_in_with_provider", provider: 'Google') %>
+        </div>
+      <% end %>
+      <br />
+    <% else %>
+      <%= link_to t(".sign_in_with_provider", provider: OmniAuth::Utils.camelize(provider)), omniauth_authorize_path(resource_name, provider), class: "btn-link" %><br />
+    <% end %>
   <% end -%>
 <% end -%>

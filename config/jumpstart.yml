@@ -11,3 +11,5 @@ personal_accounts: true
 livereload: false
 solargraph: false
 register_with_account: false
+omniauth_providers:
+- google-oauth2
