@@ -86,6 +86,9 @@ module.exports = {
       borderWidth: {
         '5': '5px',
         '6': '6px'
+      },
+      minWidth: {
+        '4': '1rem'
       }
     },
     // override the default theme using the key directly

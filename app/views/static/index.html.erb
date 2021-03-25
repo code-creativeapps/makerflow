@@ -1,15 +1,111 @@
-<div class="py-32 max-w-2xl m-auto text-center flex flex-col items-center justify-center">
-  <h1 class="mb-2">Welcome to Jumpstart</h1>
-  <p class="mb-6 text-gray-700 leading-normal text-xl">Jumpstart is the perfect starting point for your next Ruby on Rails app. Skip the boilerplate setup and build your app faster.</p>
+<!-- <div class="absolute right-0 space-y-4 top-64">
+  <div class="w-48 h-12 mt-10 -mr-32 bg-<%=['red', 'purple', 'blue'].sample%>-500 rounded opacity-50"></div>
+  <div class="w-48 h-12 ml-16 bg-green-500 rounded opacity-50"></div>
+  <div class="w-48 h-12 mr-32 bg-yellow-500 rounded opacity-50 mt-30"></div>
+</div>
+-->
+<div class="absolute space-y-4 left-12">
+  <div class="w-48 h-12 mt-10 bg-<%=['red', 'purple', 'blue'].sample%>-500 rounded opacity-50"></div>
+  <div class="w-48 h-12 ml-16 bg-yellow-500 rounded opacity-50 mt-30"></div>
+</div>
+  <div class="absolute w-48 h-12 ml-8 bg-purple-500 rounded opacity-50 right-16 top-60"></div>
+  <div class="absolute w-48 h-12 mt-56 ml-8 transform translate-y-6 bg-pink-500 rounded opacity-50 right-16"></div>
+<div class="relative flex flex-col items-center justify-center mx-auto text-center">
 
-  <% if Rails.env.development? %>
+  <div class="max-w-2xl py-32 m-auto space-y-10">
+    <h1 class="text-5xl leading-snug text-transparent bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text"><%=['Organize your life', 'Gain clarity on your goals'].sample%></h1>
+    <p class="text-xl leading-normal text-gray-700">Makerflow is a weekly personnal planner that is designed to give you clarity and help you achieve your goals.</p>
+    <div>
+      <%= link_to "Try it out for free", new_user_registration_path, class: "btn btn-large bg-blue-500 text-blue-100 hover:text-white hover:bg-blue-600 transition duration-150 outline" %>
+      <p class="mt-4 text-xs text-center text-gray-500">No credit card required</p>
+    </div>
+  </div>
+
+  <div class="w-full bg-white">
+    <div class="px-16 py-32">
+      <h3 class="text-3xl font-medium">Break down your <strong>projects</strong> into <strong>milestones</strong>, <strong>tasks</strong> and <strong>sub-tasks</strong> for maximum clarity</h3>
+      <div class="container flex items-center justify-between w-full px-20 mx-auto mt-32 font-medium text-justify justify-items-center">
+        <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <h3 class="mt-5 font-medium">Projects</h3>
+          <p></p>
+        </div>
+        <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+        <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+          </svg>
+          <h3 class="mt-5 font-medium">Milestones</h3>
+        </div>
+         <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+        <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="mt-5 font-medium">Tasks</h3>
+        </div>
+         <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+         <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          <h3 class="mt-5 font-medium">Sub-tasks</h3>
+        </div>
+      </div>
+      <p class="py-0 mt-20 text-xl leading-10 text-gray-700">Breaking down projects and tasks into small manageable pieces is the key to efficiency.</p>
+      <%# <p class="py-0 mt-20 text-xl leading-10 text-gray-700">By breaking your tasks with this simple concepts you already know in a visual manner, you define your actions and goals so precisely you can't miss them! (Microproductivity/ Kill procastination)</p> %>
+    </div>
+  </div>
+
+  <div class="px-40 bg-gray-100">
+    <div class="px-16 py-32">
+      <h3 class="mt-32 text-3xl font-medium">Demo video</h3>
+
+    </div>
+  </div>
+
+  <div class="w-full bg-white">
+    <div class="px-16 py-24">
+      <h3 class="text-3xl font-medium">Coming soon.</h3>
+      <h4 class="mt-2 text-xl font-medium text-gray-500">Great features under development you can expect in the next release :</h3>
+      <div class="flex justify-around mt-32">
+        <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="mt-5 font-medium">Time tracking</h3>
+          <p></p>
+        </div>
+        <div class="text-center">
+          <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <h3 class="mt-5 font-medium">Recurring tasks</h3>
+        </div>
+      </div>
+      <div class="text-center">
+        <%= link_to "Try it out for free", new_user_registration_path, class: "mt-16 btn btn-large bg-blue-500 text-blue-100 hover:text-white hover:bg-blue-600 transition duration-150 outline lg:mb-0 mb-4" %>
+        <p class="mt-4 text-xs text-center text-gray-500">No credit card required</p>
+      </div>
+      <%# <p class="py-0 mt-20 text-xl leading-10 text-gray-700">By breaking your tasks with this simple concepts you already know in a visual manner, you define your actions and goals so precisely you can't miss them!</p> %>
+    </div>
+  </div>
+  <% if false && Rails.env.development? %>
     <div class="flex flex-col items-center md:flex-row">
       <div class="w-full md:w-auto">
         <%= link_to "Configure Jumpstart", jumpstart_path, data: { turbo: false }, class: "btn btn-primary lg:mr-4 mr-0 lg:mb-0 mb-4" %>
       </div>
 
       <div>
-        <span class="hidden md:inline border border-gray-200 h-10 mr-4"></span>
+        <span class="hidden h-10 mr-4 border border-gray-200 md:inline"></span>
         <%= link_to "Create a User", new_user_registration_path, class: "btn btn-tertiary outline lg:mr-4 mr-0 lg:mb-0 mb-4" %>
         <%= link_to "Read the Docs", jumpstart.docs_path, target: :_blank, data: { turbo: false }, class: "btn btn-tertiary outline lg:mr-4 mr-0 lg:mb-0 mb-4" %>
       </div>

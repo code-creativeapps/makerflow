@@ -42,3 +42,9 @@ import "stylesheets/base.scss"
 import "stylesheets/components.scss"
 import "stylesheets/utilities.scss"
 
+var notice = document.getElementsByClassName("notice");
+setTimeout(function(){ 
+    if (notice.length > 0) {
+        notice[0].style.display = "none" 
+    } 
+}, 3000);
