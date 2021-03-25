@@ -61,7 +61,7 @@ const Project = ({project}) => {
 						onBlur={() => toggleEdition(false)}
 					/>
 				) : (
-					<h3 className="flex items-center text-lg font-medium text-gray-700"><div onClick={() => setCurrentProjectId(project.id)} className={`w-4 h-4 mr-4 bg-${project.color} rounded-full cursor-pointer`}></div>{project.name}</h3>
+					<div className="flex items-center text-lg font-medium text-gray-700"><div onClick={() => setCurrentProjectId(project.id)} className={`w-4 h-4 mr-4 bg-${project.color} rounded-full cursor-pointer min-w-4`}></div><h3 className="text-base font-medium max-w">{project.name}</h3></div>
 				)}
 				
 				{ !edit && (

@@ -46,6 +46,11 @@ const Details = ({task, showPanel, closeTask}) => {
         setTaskNotes(newTaskNotes)
         dispatch(_updateTaskNotes(newTaskNotes, task.id))
     }
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => dispatch(_updateTaskNotes(taskNotes, task.id)), 500);
+        return () => clearTimeout(timeOutId);
+      }, [taskNotes]);
     
     if (task != null && showPanel) {
         return(
@@ -76,8 +81,8 @@ const Details = ({task, showPanel, closeTask}) => {
                         type="text"
                         name="task"
                         placeholder="Add some notes to this task..."
-                        onChange={e => updateTaskNotes(e.target.value)}
-                        value={task?.notes}
+                        onChange={e => setTaskNotes(e.target.value)}
+                        value={taskNotes}
                     />
                     <h3 className="mt-5 text-base font-semibold text-gray-600">Actions</h3>
                     <div className="flex space-x-2">
