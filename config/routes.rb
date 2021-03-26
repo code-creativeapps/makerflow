@@ -43,7 +43,10 @@ Rails.application.routes.draw do
           resources :tasks, only: [:create]
         end
       end
-      resources :tasks, only: [:update, :destroy]
+      resources :tasks, only: [:update, :destroy] do
+        resources :sub_tasks, only: [:create]
+      end
+      resources :sub_tasks, only: [:update, :destroy]
     end
   end
 

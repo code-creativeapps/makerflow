@@ -4,16 +4,19 @@
   <div class="w-48 h-12 mr-32 bg-yellow-500 rounded opacity-50 mt-30"></div>
 </div>
 -->
-<div class="absolute space-y-4 left-12">
-  <div class="w-48 h-12 mt-10 bg-<%=['red', 'purple', 'blue'].sample%>-500 rounded opacity-50"></div>
-  <div class="w-48 h-12 ml-16 bg-yellow-500 rounded opacity-50 mt-30"></div>
+<div class="absolute hidden space-y-4 md:block left-12">
+  <div class="w-48 h-12 mt-10 bg-<%=['red', 'purple', 'blue', 'green'].sample%>-500 rounded opacity-50"></div>
+  <div class="w-48 h-12 ml-16 bg-<%=['pink', 'indigo', 'yellow'].sample%>-500 rounded opacity-50 mt-30"></div>
 </div>
-  <div class="absolute w-48 h-12 ml-8 bg-purple-500 rounded opacity-50 right-16 top-60"></div>
-  <div class="absolute w-48 h-12 mt-56 ml-8 transform translate-y-6 bg-pink-500 rounded opacity-50 right-16"></div>
+<div class="hidden md:block">
+  <div class="absolute w-48 h-12 ml-8 bg-<%=['red', 'purple', 'blue', 'green'].sample%>-500 rounded opacity-50 right-16 top-60"></div>
+  <div class="absolute w-48 h-12 mt-54 ml-8 transform translate-y-6 bg-<%=['pink', 'indigo', 'yellow'].sample%>-500 rounded opacity-50 right-16"></div>
+</div>
 <div class="relative flex flex-col items-center justify-center mx-auto text-center">
 
   <div class="max-w-2xl py-32 m-auto space-y-10">
-    <h1 class="text-5xl leading-snug text-transparent bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text"><%=['Organize your life', 'Gain clarity on your goals'].sample%></h1>
+    <%# <h1 class="text-5xl leading-snug text-transparent bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text"><%=['Organize your life', 'Gain clarity on your goals'].sample%></h1>
+    <h1 class="text-5xl leading-snug text-transparent bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text"><%=['Gain clarity on your goals'].sample %></h1>
     <p class="text-xl leading-normal text-gray-700">Makerflow is a weekly personnal planner that is designed to give you clarity and help you achieve your goals.</p>
     <div>
       <%= link_to "Try it out for free", new_user_registration_path, class: "btn btn-large bg-blue-500 text-blue-100 hover:text-white hover:bg-blue-600 transition duration-150 outline" %>
@@ -23,16 +26,15 @@
 
   <div class="w-full bg-white">
     <div class="px-16 py-32">
-      <h3 class="text-3xl font-medium">Break down your <strong>projects</strong> into <strong>milestones</strong>, <strong>tasks</strong> and <strong>sub-tasks</strong> for maximum clarity</h3>
-      <div class="container flex items-center justify-between w-full px-20 mx-auto mt-32 font-medium text-justify justify-items-center">
+      <h3 class="text-2xl font-medium md:text-3xl">Break down your <strong>projects</strong> into <strong>milestones</strong>, <strong>tasks</strong> and <strong>sub-tasks</strong> for maximum clarity</h3>
+      <div class="container items-center justify-between w-full px-20 mx-auto mt-32 space-y-8 font-medium text-justify md:flex justify-items-center md:space-y-0">
         <div class="text-center">
           <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
           <h3 class="mt-5 font-medium">Projects</h3>
-          <p></p>
         </div>
-        <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="hidden w-10 m-auto md:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
         <div class="text-center">
@@ -41,7 +43,7 @@
           </svg>
           <h3 class="mt-5 font-medium">Milestones</h3>
         </div>
-         <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+         <svg class="hidden w-10 m-auto md:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
         <div class="text-center">
@@ -50,7 +52,7 @@
           </svg>
           <h3 class="mt-5 font-medium">Tasks</h3>
         </div>
-         <svg class="block w-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+         <svg class="hidden w-10 m-auto md:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
          <div class="text-center">
@@ -65,18 +67,18 @@
     </div>
   </div>
 
-  <div class="px-40 bg-gray-100">
-    <div class="px-16 py-32">
-      <h3 class="mt-32 text-3xl font-medium">Demo video</h3>
-
+  <div class="w-full bg-gray-100">
+    <div class="px-16 py-16">
+      <h3 class="text-3xl font-medium">Demo video</h3>
+      <div class="mt-32" style="position: relative; padding-bottom: 49.6875%; height: 0;"><iframe src="https://www.loom.com/embed/7bf1b6141f7844efaca7471516be5c42" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     </div>
   </div>
 
   <div class="w-full bg-white">
-    <div class="px-16 py-24">
+    <div class="md:px-16 py-24">
       <h3 class="text-3xl font-medium">Coming soon.</h3>
-      <h4 class="mt-2 text-xl font-medium text-gray-500">Great features under development you can expect in the next release :</h3>
-      <div class="flex justify-around mt-32">
+      <h4 class="mt-2 text-xl font-medium text-gray-500">Great features under development you can expect in the next release</h3>
+      <div class="space-y-10 md:space-y-0 md:flex justify-around mt-32">
         <div class="text-center">
           <svg class="block w-20 m-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

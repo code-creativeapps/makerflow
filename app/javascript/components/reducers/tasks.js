@@ -222,6 +222,7 @@ export default function tasks(state = initialState, action) {
     const {
         projects,
         planning,
+        task,
         type,
         projectIndex,
         milestoneIndex, 
@@ -245,7 +246,8 @@ export default function tasks(state = initialState, action) {
       case UPDATE_STATE:
           return update(state, { 
             projects: { $set: projects }, 
-            planning: { $set: planning }
+            planning: { $set: planning },
+            openedTask: { $set: task }
           })
       case FETCH_DATA_SUCCESS:
           return update(state, { 

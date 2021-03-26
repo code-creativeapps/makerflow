@@ -37,6 +37,18 @@ import { 
   deleteTaskSuccess
  } from './tasks'
 
+import { 
+  addSubTaskSuccess, 
+  addSubTaskPending, 
+  addSubTaskError,
+  updateSubTaskError,
+  updateSubTaskPending,
+  updateSubTaskSuccess,
+  deleteSubTaskError,
+  deleteSubTaskPending,
+  deleteSubTaskSuccess
+ } from './sub_tasks'
+
 export const UPDATE_STATE = 'UPDATE_STATE'
 
 export const OPEN_TASK = 'OPEN_TASK';
@@ -126,11 +138,12 @@ export function openTask(openedTask, showPanel = true) {
   };
 }
 
-export function updateState({projects, planning}) {
+export function updateState({projects, planning, task}) {
   return {
     type: UPDATE_STATE,
     projects,
-    planning
+    planning,
+    task
   };
 }
 
@@ -425,6 +438,97 @@ export function _deleteTask(taskId) {
       dispatch(deleteTaskSuccess())
       dispatch(updateState(data))
       dispatch(closeTask())
+    })
+    .catch(function (error) {
+      console.log(error);
+      // TODO: Display error on the front-end
+      dispatch(deleteMilestoneError(error))
+      // Back to previous state 
+      dispatch(updateState({planning, projects}))
+    })
+  }
+}
+
+export function _addSubTask(subTaskName, taskId) {
+  return(dispatch, getState) => {
+    const { projects, planning } = getState().tasks
+  
+    dispatch(addTaskPending())
+    // call API, POST new task, get object
+    axios.post(`/api/v1/tasks/${taskId}/sub_tasks/`, { sub_task: { name: subTaskName } })
+    .then((response) => {
+      const { data } = response
+      dispatch(addSubTaskSuccess())
+      dispatch(updateState(data))
+      // dispatch(openTask(data.task))
+    })
+    .catch(function (error) {
+      console.log(error);
+      // TODO: Display error on the front-end
+      dispatch(addSubTaskError(error))
+      // Back to previous state 
+      dispatch(updateState({planning, projects}))
+    })
+  }
+}
+export function _updateSubTask(subTaskName, subTaskId) {
+  return(dispatch, getState) => {
+    const { projects, planning } = getState().tasks
+  
+    dispatch(updateTaskPending())
+    // call API, POST new task, get object
+    axios.put(`/api/v1/sub_tasks/${subTaskId}`, { sub_task: { name: subTaskName } })
+    .then((response) => {
+      const { data } = response
+      dispatch(updateTaskSuccess())
+      dispatch(updateState(data))
+      dispatch(openTask(data.task))
+    })
+    .catch(function (error) {
+      console.log(error);
+      // TODO: Display error on the front-end
+      dispatch(updateTaskError(error))
+      // Back to previous state 
+      dispatch(updateState({planning, projects}))
+    })
+  }
+}
+
+export function _checkSubTask(completed, subTaskId) {
+  return(dispatch, getState) => {
+    const { projects, planning } = getState().tasks
+  
+    dispatch(updateTaskPending())
+    // call API, POST new task, get object
+    axios.put(`/api/v1/sub_tasks/${subTaskId}`, { sub_task: { completed } })
+    .then((response) => {
+      const { data } = response
+      dispatch(updateTaskSuccess())
+      dispatch(updateState(data))
+      dispatch(openTask(data.task))
+    })
+    .catch(function (error) {
+      console.log(error);
+      // TODO: Display error on the front-end
+      dispatch(updateTaskError(error))
+      // Back to previous state 
+      dispatch(updateState({planning, projects}))
+    })
+  }
+}
+
+export function _deleteSubTask(subTaskId) {
+  return(dispatch, getState) => {
+    const { projects, planning } = getState().tasks
+  
+    dispatch(deleteTaskPending())
+    // call API, POST new task, get object
+    axios.delete(`/api/v1/sub_tasks/${subTaskId}`)
+    .then((response) => {
+      const { data } = response
+      dispatch(deleteTaskSuccess())
+      dispatch(updateState(data))
+      dispatch(openTask(data.task))
     })
     .catch(function (error) {
       console.log(error);

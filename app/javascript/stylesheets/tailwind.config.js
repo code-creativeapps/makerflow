@@ -13,6 +13,7 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),
+    require('@tailwindcss/custom-forms')
   ],
 
   // Purge unused TailwindCSS styles
@@ -89,6 +90,9 @@ module.exports = {
       },
       minWidth: {
         '4': '1rem'
+      },
+      margin: {
+        '54': '13.5rem'
       }
     },
     // override the default theme using the key directly

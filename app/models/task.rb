@@ -13,8 +13,12 @@
 #  milestone_id :integer
 #
 class Task < ApplicationRecord
+    default_scope { order(created_at: :asc) }
+
     belongs_to :milestone
     has_one :project, through: :milestone
+
+    has_many :sub_tasks
 
     validates :name, presence: true
 end

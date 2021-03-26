@@ -67,6 +67,7 @@ class User < ApplicationRecord
   has_many :projects
   has_many :milestones, through: :projects
   has_many :tasks, through: :milestones
+  has_many :sub_tasks, through: :tasks
 
   # We don't need users to confirm their email address on create,
   # just when they change it

@@ -28,8 +28,9 @@ const Task = ({ task, project, index }) => {
                             flex max-h-20 items-center text-center justify-between p-2 my-2 text-xs font-semibold
                             text-white  
                             rounded shadow-sm group ${snapshot.isDragging && 'opacity-50'} 
-                            ${(checked && task.date != null) ? `bg-${_project.colorBase}-${_project.colorShade - 100} line-through cursor-pointer hover:bg-${_project.colorBase}-${_project.colorShade - 100}`
+                            ${(checked && task.date != null) ? `${_project.color != 'black' ? `bg-${_project.colorBase}-${_project.colorShade - 100}` : 'bg-gray-600'} line-through cursor-pointer hover:bg-${_project.colorBase}-${_project.colorShade - 100}`
                             : `bg-${_project.color} hover:bg-${_project.colorBase}-${_project.colorShade + 100}`}`
+                            
                         }
                         >
                             {task.name}
