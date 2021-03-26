@@ -28,7 +28,7 @@ const Details = ({task, showPanel, closeTask}) => {
     const dispatch = useDispatch()
 
     const DeleteTaskButton = () => (
-        <div onClick={() => { if (window.confirm('Are you sure you want to delete this task?')) dispatch(_deleteTask(task?.id))}} class="cursor-pointer mt-5 border-2 border-gray-400 rounded-full shadow-md p-0 flex w-8 h-8 items-center justify-center group hover:bg-gray-500">
+        <div onClick={() => { if (window.confirm('Are you sure you want to delete this task?')) dispatch(_deleteTask(task.id))}} class="cursor-pointer mt-5 border-2 border-gray-400 rounded-full shadow-md p-0 flex w-8 h-8 items-center justify-center group hover:bg-gray-500">
             <svg className="w-5 text-gray-400 group-hover:text-gray-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
@@ -45,18 +45,14 @@ const Details = ({task, showPanel, closeTask}) => {
     }
 
     useEffect(() => {
-        if (task != null) {
-            const timeOutId = setTimeout(() => dispatch(_updateTask(taskName, task.id)), 500);
-            return () => clearTimeout(timeOutId);
-        }
-    }, [taskName, task])
+        const timeOutId = setTimeout(() => dispatch(_updateTask(taskName, task.id)), 500);
+        return () => clearTimeout(timeOutId);
+    }, [taskName])
 
     useEffect(() => {
-        if (task != null) {       
-            const timeOutId = setTimeout(() => dispatch(_updateTaskNotes(taskNotes, task.id)), 500);
-            return () => clearTimeout(timeOutId);
-        }
-    }, [taskNotes, task])
+        const timeOutId = setTimeout(() => dispatch(_updateTaskNotes(taskNotes, task.id)), 500);
+        return () => clearTimeout(timeOutId);
+    }, [taskNotes])
 
     
     if (task != null && showPanel) {
