@@ -32,6 +32,7 @@ module.exports = {
     extend: {
       // Create your own at: https://javisperez.github.io/tailwindcolorshades
       colors: {
+        ...colors,
         //orange: colors.orange,
         'primary': {
           50: '#F6F7FF',
