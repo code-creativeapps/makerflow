@@ -45,14 +45,18 @@ const Details = ({task, showPanel, closeTask}) => {
     }
 
     useEffect(() => {
-        const timeOutId = setTimeout(() => dispatch(_updateTask(taskName, task?.id)), 500);
-        return () => clearTimeout(timeOutId);
-    }, [taskName])
+        if (task != null) {
+            const timeOutId = setTimeout(() => dispatch(_updateTask(taskName, task.id)), 500);
+            return () => clearTimeout(timeOutId);
+        }
+    }, [taskName, task])
 
     useEffect(() => {
-        const timeOutId = setTimeout(() => dispatch(_updateTaskNotes(taskNotes, task?.id)), 500);
-        return () => clearTimeout(timeOutId);
-    }, [taskNotes])
+        if (task != null) {       
+            const timeOutId = setTimeout(() => dispatch(_updateTaskNotes(taskNotes, task.id)), 500);
+            return () => clearTimeout(timeOutId);
+        }
+    }, [taskNotes, task])
 
     
     if (task != null && showPanel) {
@@ -85,9 +89,9 @@ const Details = ({task, showPanel, closeTask}) => {
     
                         <div class="space-y-4 py-4">
                             {task.sub_tasks.map((subTask) => <div class="flex items-center space-x-2 group">
-                                <input class="text-gray-600 form-checkbox" type="checkbox" defaultChecked={subTask.completed} onChange={e => dispatch(_checkSubTask(e.target.checked, subTask?.id))}/>
-                                <input type="text" className="w-full p-0 text-base border-none focus:outline-none focus:ring-0" onChange={e => updateSubTask(e.target.value, subTask?.id)} defaultValue={subTask.name}/>
-                                <svg onClick={() => dispatch(_deleteSubTask(subTask?.id))} className="w-5 text-gray-400 opacity-0 justify-self-end group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <input class="text-gray-600 form-checkbox" type="checkbox" defaultChecked={subTask.completed} onChange={e => dispatch(_checkSubTask(e.target.checked, subTask.id))}/>
+                                <input type="text" className="w-full p-0 text-base border-none focus:outline-none focus:ring-0" onChange={e => updateSubTask(e.target.value, subTask.id)} defaultValue={subTask.name}/>
+                                <svg onClick={() => dispatch(_deleteSubTask(subTask.id))} className="w-5 text-gray-400 opacity-0 justify-self-end group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                                 </svg>
                             </div>)}
