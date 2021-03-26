@@ -23,6 +23,7 @@ module.exports = {
       './**/*.html.erb',
       './app/helpers/**/*.rb',
       './app/javascript/**/*.js',
+      './app/javascript/**/*.jsx',
     ],
   },
 
