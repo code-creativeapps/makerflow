@@ -19,10 +19,9 @@ const PauseTaskButton = () => (
 )
 
 const Details = ({task, showPanel, closeTask}) => {
-    console.log(task)
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            dispatch(_addSubTask(event.target.value, task.id))
+            dispatch(_addSubTask(event.target.value, task?.id))
             event.target.value = ''
         }
     }
