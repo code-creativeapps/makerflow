@@ -83,7 +83,7 @@ const Milestone = ({milestone, project}) => {
               <Task key={task.id} task={task} index={index} project={project}/>
             ))}
           { provided.placeholder }
-          { isOpen && <input onKeyDown={handleKeyDown} placeholder={`Add a new task in ${milestone.name}...`} className={`w-full p-2 mb-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 ${project.colorBase != 'black' ? `border-${project.colorBase}-${project.colorShade - 100}` : 'border-black'}  rounded shadow-sm outline-none ${project.colorBase != 'black' ? `focus:bg-${project.colorBase}-${project.colorShade + 100}` : 'focus:bg-black'}  focus:text-white focus:placeholder-white`}/>}
+          { isOpen && <input onKeyDown={handleKeyDown} placeholder={`Add a new task in ${milestone.name}...`} className={`new-task w-full p-2 mb-2 text-xs font-semibold text-${project.color} placeholder-${project.color} bg-white border-2 ${project.colorBase != 'black' ? `border-${project.colorBase}-${project.colorShade - 100}` : 'border-black'}  rounded shadow-sm outline-none ${project.colorBase != 'black' ? `focus:bg-${project.colorBase}-${project.colorShade + 100}` : 'focus:bg-black'}  focus:text-white focus:placeholder-white`}/>}
           </div>
         )
       }

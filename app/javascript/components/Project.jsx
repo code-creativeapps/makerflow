@@ -41,7 +41,7 @@ const Project = ({project}) => {
 	}
 
  	return (
-		<div>
+		<div class="project">
 			{/* Color select + Name + Update icon */}
 			<div className="flex items-center justify-between mb-4 group">
 				{ edit ? (
