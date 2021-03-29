@@ -72,7 +72,7 @@ class User < ApplicationRecord
   # We don't need users to confirm their email address on create,
   # just when they change it
   before_create :skip_confirmation!
-  after_create :seed_example_data
+  # after_create :seed_example_data
 
   # Validations
   validates :name, presence: true
