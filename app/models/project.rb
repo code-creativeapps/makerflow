@@ -18,7 +18,7 @@ class Project < ApplicationRecord
     before_validation :init
     
     def init
-        self.color = self.user.unused_colors.sample if self.color.nil?  
+        self.color = self.user.unused_colors.sample if self.color.nil?
     end
 
     def colorBase

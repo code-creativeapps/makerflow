@@ -212,9 +212,9 @@ export function _addProject(projectName) {
     // TODO: POST api call
     const newProject = {
       name: projectName,
-      color: 'yellow-500',
-      colorBase: 'yellow',
-      colorShade: 500,
+      // color: 'yellow-500',
+      // colorBase: 'yellow',
+      // colorShade: 500,
     }
     // call API, POST new task, get object
     axios.post(`/api/v1/projects/`, { project: newProject } )
