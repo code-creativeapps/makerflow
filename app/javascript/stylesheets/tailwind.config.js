@@ -157,6 +157,11 @@ module.exports = {
       '1/2': '50%',
       '3/4': '75%',
       'full': '100%',
+     },
+     flexGrow: {
+       '0': 0,
+       DEFAULT: 2,
+       '1': 1
      }
   },
   variants: {

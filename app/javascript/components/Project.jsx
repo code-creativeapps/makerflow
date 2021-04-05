@@ -77,15 +77,16 @@ const Project = ({project}) => {
 			</div>
 			<ColorPicker currentProjectId={currentProjectId} changeColor={changeColor} project={project}/>
 			{/* Milestones */}
-			<div>
+			<div class="mx-2">
+	
 				{ project.milestones.map((milestone) => (
 					<Milestone milestone={milestone} project={project}/>
 				))}
 				{/* Add Milestone */}
             
-				<h4 className="flex items-center mt-2 text-base font-normal text-gray-400">
-					<div className="flex items-center justify-center w-4 h-4 mr-4 bg-gray-400 rounded-full">
-						<button className="flex items-center justify-center w-4 h-4 font-semibold text-white bg-gray-400 rounded-full focus:outline-none">
+				<h4 className="flex items-center mb-2 text-base font-normal text-gray-300">
+					<div className="flex items-center justify-center w-4 h-4 mr-2 bg-gray-300 rounded-full">
+						<button className="flex items-center justify-center w-4 h-4 font-semibold text-white bg-gray-300 rounded-full focus:outline-none">
 							<p>
 							<svg className="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 								<path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
@@ -93,7 +94,7 @@ const Project = ({project}) => {
 							</p>
 						</button>
 					</div>
-					<input onKeyDown={handleKeyDownMilestone} className="placeholder-gray-400 capitalize outline-none placeholder:font-normal" placeholder="Add a Milestone"/> 
+					<input onKeyDown={handleKeyDownMilestone} className="placeholder-gray-300 outline-none placeholder:font-normal" placeholder="Add a Milestone"/> 
 				</h4>
 			</div>
 		</div>

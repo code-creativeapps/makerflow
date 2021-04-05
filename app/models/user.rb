@@ -86,4 +86,23 @@ class User < ApplicationRecord
     example_milestone = example_project.milestones.create(name: 'Example Milestone')
     example_task = example_milestone.tasks.create(name: 'Example Task')
   end
+
+  def used_colors 
+    self.projects.where.not(id: nil).map(&:color)
+  end
+
+  def unused_colors
+    colors = [
+      'red-500',
+      'yellow-500',
+      'green-500',
+      'blue-500',
+      'indigo-500',
+      'purple-500',
+      'pink-500',
+      'black',
+  ]
+    unused_colors = colors - self.used_colors
+    unused_colors.empty? ? colors : unused_colors
+  end
 end

@@ -20,7 +20,7 @@ const Sidebar = ({projects}) => {
       }
     
     return (
-        <div className="w-1/4 p-2 overflow-y-auto bg-white border border-gray-300">
+        <div className="w-1/4 p-2 overflow-hidden overflow-y-auto bg-white border border-gray-300">
             { edit ? (
                 <input 
                     className="w-full mb-8 text-xl font-semibold text-gray-600 border-none resize-none focus:m-0 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"

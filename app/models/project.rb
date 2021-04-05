@@ -15,10 +15,10 @@ class Project < ApplicationRecord
     has_many :tasks, through: :milestones, dependent: :destroy 
 
     validates :name, presence: true
-    after_initialize :init
+    before_validation :init
     
     def init
-        self.color  ||= 'yellow-500'
+        self.color = self.user.unused_colors.sample if self.color.nil?  
     end
 
     def colorBase
