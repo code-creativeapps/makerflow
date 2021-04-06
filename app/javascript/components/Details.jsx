@@ -108,10 +108,10 @@ const Details = ({task, showPanel, closeTask}) => {
                         <textarea
                             className="w-full h-24 p-3 mt-2 text-sm text-gray-500 placeholder-gray-400 bg-gray-100 border-none rounded resize-none t focus:p-2 focus:border-2 focus:border-gray-600 focus:outline-none focus:ring-0"
                             type="text"
-                            name="task"
+                            name="taskNotes"
                             placeholder="Add some notes to this task..."
                             onChange={e => setTaskNotes(e.target.value)}
-                            value={taskNotes ? taskNotes : task.notes}
+                            value={taskNotes ? taskNotes : (task.notes ? task.notes : '')}
                         />
                     </div>
                     <div>
